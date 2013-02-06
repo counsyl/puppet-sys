@@ -1,0 +1,19 @@
+<%# Settings is expected to be an array -%>
+<% if settings.is_a? Array -%>
+<% settings.each do |setting| -%>
+<%# If the setting is a hash, then pull out the names, values, and comments from it -%>
+<% if setting.is_a? Hash -%>
+<% if setting.fetch('comment', '') != '' -%>
+# <%= setting['comment'] %>
+<% end -%>
+<% if ['YES', 'NO'].member?(setting['value']) -%>
+<%= setting['name'] %>=<%= setting['value'] %>
+<% else -%>
+<%= setting['name'] %>="<%= setting['value'] %>"
+<% end -%>
+<% else -%>
+<%# Otherwise, just output the value of variable as given. -%>
+<%= setting %>
+<% end -%>
+<% end -%>
+<% end -%>

@@ -1,0 +1,14 @@
+<% if name.start_with?('pflog') -%>
+<%# If this is a pflog interface, simply put 'up' in here (no newline after). -%>
+up<% else -%>
+<%# This declares the address for the interface; the space after the `broadcast` variable is significant! -%>
+<%= addr_family %> <%= ip %> <%= netmask %><% if broadcast -%> <%= broadcast %> <% end %>
+<%# Generate any aliases, if necessary. -%>
+<% if aliases.is_a? Array -%>
+<% aliases.sort.each do |alias_ip| -%>
+<%= addr_family %> alias <%= alias_ip %> <%= netmask %>
+<% end -%>
+<% elsif aliases and aliases != '' -%>
+<%= addr_family %> alias <%= aliases %> <%= netmask %>
+<% end -%>
+<% end -%>

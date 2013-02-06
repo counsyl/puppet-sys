@@ -1,0 +1,43 @@
+# Customize the PATH
+export PATH=<%= bashpath %>
+<% if @pythonpath -%>
+export PYTHONPATH=<%= @pythonpath %>
+<% end -%>
+
+# Other common environment variable customizations.
+export MANPATH=/usr/gnu/share/man:/usr/local/share/man:/usr/share/man
+export PAGER="/usr/bin/less -ins"
+<% if @editor %>
+# Editor settings
+export EDITOR=<%= @editor %>
+<% end -%>
+
+# Aliases to make things more comfortable and GNU-like.
+alias c='clear'
+alias ls='ls --color=auto'
+alias l='ls'
+alias ll='ls -la'
+alias la='ls -a'
+alias lh='ls -lh'
+alias tar='gtar'
+alias now='date -u +%Y-%m-%d-%T'
+alias siostat='iostat -xcznpm 3'
+
+# Solaris native commands, not GNU, are necessary to modify and/or examine
+# extended ACL attributes.
+alias al='/bin/ls'
+alias ala='al -a'
+alias all='al -la'
+
+# ZFS completion
+set show-all-if-ambiguous on
+source ~/.zfs_completion
+
+# Define default prompt to <username>@<hostname>:<path><"($|#) ">
+# and print '#' for user "root" and '$' for normal users.
+PS1='${LOGNAME}@$(/usr/bin/hostname):$(
+    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${PWD/${HOME}/~}# " ||
+    printf "%s" "${PWD/${HOME}/~}\$ ")'
+<% if @extra -%>
+<%= @extra %>
+<% end -%>

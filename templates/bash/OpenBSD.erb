@@ -1,0 +1,26 @@
+# Aliases
+alias c='clear'
+alias ls='colorls -G'
+alias l='ls'
+alias ll='ls -l'
+alias lh='ls -lh'
+alias la='ls -a'
+<% if @editor %>
+# The One True Editor
+export EDITOR=<%= @editor %>
+<% end -%>
+
+# Minimalist path (e.g., no X11, games) for server systems.
+export PATH=<%= bashpath %>
+<% if @pythonpath -%>
+export PYTHONPATH=<%= @pythonpath %>
+<% end -%>
+
+# Define default prompt to <username>@<hostname>:<path><"($|#) ">
+# and print '#' for user "root" and '$' for normal users.
+PS1='${LOGNAME}@$(/bin/hostname -s):$(
+    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${PWD/${HOME}/~}# " ||
+    printf "%s" "${PWD/${HOME}/~}\$ ")'
+<% if @extra -%>
+<%= @extra %>
+<% end -%>

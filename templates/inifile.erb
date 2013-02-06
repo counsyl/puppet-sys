@@ -1,0 +1,9 @@
+<%= @header %>
+<% if @config -%>
+<% @config.keys.sort.each do |section| -%>
+[<%= section %>]
+<% @config[section].keys.sort.each do |var| -%>
+<%= " " * Integer(@indent) %><%= "#{var} = #{@config[section][var]}" %>
+<% end -%>
+<% end -%>
+<% end -%>

@@ -1,0 +1,19 @@
+_zfs_completion()
+{
+        local cur prev opts
+
+        COMPREPLY=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+        # Get the list of available datasets, ignoring error and removing
+        # any empty line or spaces
+        opts="`zfs list -H -o name 2> /dev/null | sed -e 's/ \+\(\w\+\).*\`/\1/g'`"
+
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+}
+# Provide ZFS dataset completion for the following scenarios.
+complete -F _zfs_completion -o default zfs
+complete -F _zfs_completion -o default sudo zfs
+complete -F _zfs_completion -o default pfexec zfs

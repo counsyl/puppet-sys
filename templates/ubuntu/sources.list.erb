@@ -1,0 +1,45 @@
+# Main repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> main restricted
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> main restricted
+
+# Updates repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates main restricted
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates main restricted
+
+# Universe repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> universe
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> universe
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates universe
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates universe
+
+# Multiverse repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> multiverse
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %> multiverse
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates multiverse
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-updates multiverse
+<% if backports -%>
+
+# Backports repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-backports main restricted universe multiverse
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-backports main restricted universe multiverse
+<% end -%>
+<% if partner -%>
+
+deb http://archive.canonical.com/ubuntu <%= scope.lookupvar('::lsbdistcodename') %> partner
+deb-src http://archive.canonical.com/ubuntu <%= scope.lookupvar('::lsbdistcodename') %> partner
+<% end -%>
+
+# Security repository.
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security main restricted
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security main restricted
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security universe
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security universe
+deb <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security multiverse
+deb-src <%= mirror %> <%= scope.lookupvar('::lsbdistcodename') %>-security multiverse
+<% if files.is_a? Array -%>
+
+# Local file repositories.
+<% files.each do |file| -%>
+deb file://<%= file %> /
+<% end -%>
+<% end -%>

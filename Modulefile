@@ -1,0 +1,8 @@
+name    'counsyl-sys'
+version '1.0.0'
+source 'git://github.counsyl.com/justin/counsyl-sys.git'
+author 'counsyl'
+license 'Apache License, Version 2.0'
+summary 'Common platform packages, resources and modules'
+description 'Common platform packages, resources and modules'
+project_page 'https://github.counsyl.com/justin/counsyl-sys.git'

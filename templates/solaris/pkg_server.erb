@@ -1,0 +1,8 @@
+add <%= name %>
+select <%= name %>
+addpg pkg application
+setprop pkg/address = net_address: ( <%= address %> )
+setprop pkg/inst_root = astring: "<%= inst_root %>"
+setprop pkg/port = count: <%= port %>
+setprop pkg/proxy_base = astring: "<%= proxy_base %>"
+exit

@@ -1,0 +1,27 @@
+# Aliases
+alias c='clear'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias l='ls'
+alias ll='ls -l'
+alias lh='ls -lh'
+alias la='ls -a'
+
+<% if @editor -%>
+export EDITOR=<%= @editor %>
+<% end -%>
+export PATH=<%= bashpath %>
+<% if @pythonpath -%>
+export PYTHONPATH=<%= @pythonpath %>
+<% end -%>
+
+# Define default prompt to <username>@<hostname>:<path><"($|#) ">
+# and print '#' for user "root" and '$' for normal users.
+PS1='${LOGNAME}@$(/bin/hostname):$(
+    [[ "${LOGNAME}" == "root" ]] && printf "%s" "${PWD/${HOME}/~}# " ||
+    printf "%s" "${PWD/${HOME}/~}\$ ")'
+<% if @extra -%>
+<%= @extra %>
+<% end -%>
