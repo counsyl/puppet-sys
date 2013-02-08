@@ -15,10 +15,10 @@
 #  Set to 'inet6' for IPv6.
 #
 # [*aliases*]
-#  A list of IP aliases for the interface.  Defaults to false.
+#  A list of IP aliases for the interface, defaults to undef.
 #
 # [*broadcast*]
-#  The broadcast address for the interface, defaults to false.
+#  The broadcast address for the interface, defaults to undef.
 #
 # [*netmask*]
 #  The network mask for the interface, defaults to '255.255.255.0'.
@@ -47,8 +47,8 @@
 define sys::openbsd::interface(
   $ip='',
   $addr_family='inet',
-  $aliases=false,
-  $broadcast=false,
+  $aliases=undef,
+  $broadcast=undef,
   $netmask='255.255.255.0',
   $owner='root',
   $group='wheel',
