@@ -16,12 +16,11 @@ server=<%= forwarder %>
 # DHCP Settings
 <% @networks.each do |network| -%>
 dhcp-range=<%= network['dynamic'].join(',') %>,<% if network.has_key?('lease') %><%= network['lease'] %><% else %><%= @default_lease %><% end %>
-<% network['hosts'].keys.each do |hostname| -%>
+<% network['hosts'].keys.sort.each do |hostname| -%>
 <% if network['hosts'][hostname].has_key?('mac') -%>
 dhcp-host=<%= network['hosts'][hostname]['mac'] %>,<%= hostname %>,infinite
 <% else -%>
 dhcp-host=<%= hostname %>
 <% end -%>
-
 <% end -%>
 <% end -%>
