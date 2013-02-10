@@ -1,0 +1,38 @@
+#	$OpenBSD: hosts,v 1.11 2002/09/26 23:35:51 krw Exp $
+#
+# Host Database
+#
+# RFC 1918 specifies that these networks are "internal".
+# 10.0.0.0      10.255.255.255
+# 172.16.0.0    172.31.255.255
+# 192.168.0.0   192.168.255.255
+#
+::1             localhost
+127.0.0.1       localhost
+::1             <%= scope.lookupvar('::fqdn') %> <%= scope.lookupvar('::hostname') %>
+127.0.0.1       <%= scope.lookupvar('::fqdn') %> <%= scope.lookupvar('::hostname') %>
+<% if @networks.is_a? Hash -%>
+<% @networks.keys.sort.each do |name| -%>
+<% network = @networks[name] -%>
+<%# Place comment for the network in the hosts file -%>
+<% if network.fetch('comment', '') != '' -%>
+# <%= network['comment'] %>
+<% end -%>
+<%= sprintf("%-15s %s %s", network['gateway'], scope.lookupvar('::fqdn'), scope.lookupvar('::hostname')) %>
+<%# Creating hash mapping from IP to hostname on this network. -%>
+<% ip_hash = {} -%>
+<% network['hosts'].each do |hostname, info| -%>
+<% ip_hash[IPAddr.new(info['ip'])] = hostname -%>
+<% end -%>
+<%# Print out hosts, ordered by IP Address. -%>
+<% ip_hash.keys.sort.each do |ip| -%>
+<% hostname = ip_hash[ip] -%>
+<% aliases = network['hosts'][hostname].fetch('aliases', false) -%>
+<% if aliases -%>
+<%= sprintf("%-15s %s %s", ip, hostname, aliases) %>
+<% else -%>
+<%= sprintf("%-15s %s", ip, hostname) %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
