@@ -1,4 +1,4 @@
-# == Define: sys::ubuntu::apt_sources
+# == Define: sys::apt::sources
 #
 # Sets up a `sources.list` file for apt repositories.
 #
@@ -21,13 +21,25 @@
 #
 # [*template*]
 #  Template to use to render the sources.list, defaults to
-# 'ubuntu/sources.list.erb'.
+# 'sys/apt/sources.list.erb'.
 #
-define sys::ubuntu::apt_sources(
-  $mirror='http://us.archive.ubuntu.com/ubuntu/',
-  $backports=false, $partner=false, $files=false,
-  $template='sys/ubuntu/sources.list.erb'
-  ){
+# === Examples
+#
+#   sys::apt::sources { '/etc/apt/sources.list':
+#     repositories => [
+#       { uri          => 'http://us.archive.ubuntu.com/ubuntu/',
+#         distribution => 'precise',
+#         components   => ['main', 'restricted'],
+#       }
+#     ],
+#     source       => false,
+#   }
+#
+define sys::apt::sources(
+  $repositories,
+  $source   = true,
+  $template = 'sys/apt/sources.list.erb'
+){
   # The name of the resource should be the path to the apt
   # sources list, e.g., '/etc/apt/sources.list'.
   file { $name:
@@ -36,26 +48,5 @@ define sys::ubuntu::apt_sources(
     group   => 'root',
     mode    => '0644',
     content => template($template),
-  }
-
-  # Pass in `require` and `before` metaparameters if defined.
-  if $require {
-    File[$name] {
-      require +> $require,
-    }
-  }
-
-  if $before {
-    File[$name] {
-      before +> $before,
-    }
-  }
-
-  # Update the repository when apt sources have changed.
-  exec { 'apt-update':
-    subscribe   => File[$name],
-    refreshonly => true,
-    path        => ['/bin', '/usr/bin'],
-    command     => 'apt-get -y update',
   }
 }
