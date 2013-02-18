@@ -3,8 +3,8 @@
 <% if repository.has_key? 'comment' -%>
 # <%= repository['comment'] %>
 <% end -%>
-deb <%= repository['uri'] %> <%= repository['distribution'] %> <% if repository['components'].is_a? Array %><%= repository['distribution'].join(' ') %><% else %><%= repository['distribution'] %><% end %>
+deb <%= repository['uri'] %> <%= repository['distribution'] %> <% if repository['components'].is_a? Array %><%= repository['components'].join(' ') %><% else %><%= repository['components'] %><% end %>
 <% if @source %>
-deb-src <%= repository['uri'] %> <%= repository['distribution'] %> <% if repository['components'].is_a? Array %><%= repository['distribution'].join(' ') %><% else %><%= repository['distribution'] %><% end %>
+deb-src <%= repository['uri'] %> <%= repository['distribution'] %> <% if repository['components'].is_a? Array %><%= repository['components'].join(' ') %><% else %><%= repository['components'] %><% end %>
 <% end -%>
 <% end -%>
