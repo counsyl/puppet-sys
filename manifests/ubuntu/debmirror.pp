@@ -14,7 +14,7 @@ class sys::ubuntu::debmirror(
   $progress            = false,
   $protocol            = 'rsync',
   $section             = ['main', 'restricted', 'universe', 'multiverse'],
-  $source              = false,
+  $source              = true,
   $release             = ["${::lsbdistcodename}",
                           "${::lsbdistcodename}-security",
                           "${::lsbdistcodename}-updates"],
