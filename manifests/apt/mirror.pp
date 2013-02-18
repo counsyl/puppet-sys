@@ -3,6 +3,16 @@
 # Create `/etc/apt/sources.list` like Ubuntu configures it by default,
 # but with the URI replaced with one of your choosing.
 #
+# === Parameters
+#
+# [*uri*]
+#  The URI to use for the mirror.  Defaults to:
+#  'http://mirror.anl.gov/ubuntu/'.
+#
+# [*source*]
+#  Whether or not to include the debian source package repositories.
+#  Defaults to true.
+#
 class sys::apt::mirror(
   $uri    = 'http://mirror.anl.gov/ubuntu/',
   $source = true,
