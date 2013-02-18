@@ -7,6 +7,9 @@ listen-address=127.0.0.1
 listen-address=<%= network['gateway'] %>
 <% end -%>
 domain=<%= @domain %>
+<% if @expand_hosts -%>
+expand-hosts
+<% end -%>
 cache-size=<%= @cache_size %>
 no-resolv
 <% @forwarders.each do |forwarder| -%>

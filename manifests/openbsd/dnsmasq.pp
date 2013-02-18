@@ -8,6 +8,7 @@ class sys::openbsd::dnsmasq(
   $config        = '/etc/dnsmasq.conf',
   $cache_size    = '750',
   $domain        = "${::domain}",
+  $expand_hosts  = true,
   $forwarders    = ['8.8.8.8', '8.8.4.4'],
   $default_lease = '24h',
   $rc_settings   = {
