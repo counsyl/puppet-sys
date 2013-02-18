@@ -1,3 +1,5 @@
-class openbsd {
-  include openbsd::pkg
+# == Class: sys::openbsd
+#
+class sys::openbsd {
+  include sys::openbsd::pkg
 }
