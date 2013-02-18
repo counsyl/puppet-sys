@@ -2,7 +2,7 @@
 #
 # Platform-dependent parameters for installing screen.
 #
-class screen::params {
+class sys::screen::params {
   case $::osfamily {
     openbsd: {
       include sys::openbsd
