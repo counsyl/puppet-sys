@@ -1,4 +1,7 @@
-# OS-specific parameters for wget.
+# == Class: sys::wget::params
+#
+# Platform-dependent parameters for wget.
+#
 class sys::wget::params {
   $package = 'wget'
   case $::osfamily {
@@ -7,9 +10,7 @@ class sys::wget::params {
       $source = $openbsd::pkg::source
     }
     solaris: {
-      if $::operatingsystemrelease < '5.11' {
-        fail("wget only supported on Solaris 5.11 and above.\n")
-      }
+      include sys::solaris
       $provider = 'pkg'
     }
   }

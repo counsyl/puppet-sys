@@ -1,4 +1,5 @@
 # == Define: sys::inifile
+#
 # Creates a simple initialization file from the given config hash.  This
 # is different from the forge module `ini_file` which specifies a specific
 # setting *within* an existing ini file.

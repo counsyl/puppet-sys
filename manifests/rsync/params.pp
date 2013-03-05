@@ -1,15 +1,16 @@
-# OS-specific parameters for rsync.
+# == Class: sys::rsync::params
+#
+# Platform-dependent parameters for rsync.
+#
 class sys::rsync::params {
   $package = 'rsync'
-  case $::operatingsystem {
+  case $::osfamily {
     openbsd: {
-      include openbsd::pkg
-      $source = $openbsd::pkg::source
+      include sys::openbsd::pkg
+      $source = $sys::openbsd::pkg::source
     }
     solaris: {
-      if $::operatingsystemrelease < '5.11' {
-        fail("rsync only supported on Solaris 5.11 and above.\n")
-      }
+      include sys::solaris
       $provider = 'pkg'
     }
   }

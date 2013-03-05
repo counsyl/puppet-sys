@@ -1,4 +1,36 @@
-# Create a bash resource file for the given user name.
+# == Define: sys::bash::rc
+#
+# Creates a bash resource file for the given user name.
+#
+# === Parameters
+#
+# If a parameter is undefined (undef) it will not be included in the
+# bash resource file.
+#
+# [*name*]
+#  The username to create the resource file for.
+#
+# [*group*]
+#  The group to use for the resource file, defaults to undef.
+#
+# [*editor*]
+#  The value of EDITOR in the bash resource file, defaults to undef.
+#
+# [*extra*]
+#  Any extra configuration text to include the resource file.
+#  Defaults to undef.
+#
+# [*path*]
+#  The value of PATH in the bash resource file, defaults to the value
+#  in the `sys::bash::path` variable.
+#
+# [*pythonpath*]
+#  The value of PYTHONPATH in the bash resource file, defaults to undef.
+#
+# [*template*]
+#  Advanced usage only.  The template to use when generating the bash
+#  resource file, defaults to "sys/bash/${::osfamily}.erb".
+#
 define sys::bash::rc(
   $group      = undef,
   $editor     = undef,
@@ -7,7 +39,7 @@ define sys::bash::rc(
   $pythonpath = undef,
   $template   = "sys/bash/${::osfamily}.erb",
   ) {
-  require sys::bash
+  include sys::bash
 
   if $path != '' {
     $bashpath = $path

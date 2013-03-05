@@ -1,14 +1,18 @@
+# == Class: sys::bash::params
+#
+# Platform-dependent parameters for the bash shell.
+#
 class sys::bash::params {
   case $::osfamily {
     openbsd: {
-      require sys::openbsd::pkg
+      include sys::openbsd::pkg
       $source   = $sys::openbsd::pkg::source
       $extras   = 'colorls'
       $package  = 'bash'
       $path     = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/libexec'
     }
     solaris: {
-      require sys::solaris
+      include sys::solaris
       $provider = 'pkg'
       $package  = 'shell/bash'
       $path     = $sys::solaris::path

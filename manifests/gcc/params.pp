@@ -1,3 +1,7 @@
+# == Class: sys::gcc::params
+#
+# Platform-dependent parameters for GCC.
+#
 class sys::gcc::params {
   case $::osfamily {
     openbsd: {
