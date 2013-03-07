@@ -24,6 +24,6 @@ class sys::git (
 
   # Must have the git installed prior to using `vcsrepo` with it.
   if defined('vcsrepo') {
-    Package['git'] -> Vcsrepo<| provider == git |>
+    Package[$package] -> Vcsrepo<| provider == git |>
   }
 }
