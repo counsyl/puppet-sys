@@ -1,12 +1,14 @@
+# == Class: sys::openbsd::pkg
+#
+# Sets up the OpenBSD package configuration file (/etc/pkg.conf).
+#
 # Note: A node must be initialized with the `puppet::openbsd` class,
 # by itself, before anything in here will actually work.  See:
 #  http://projects.puppetlabs.com/issues/8435
+#
 class sys::openbsd::pkg (
   $config = '/etc/pkg.conf',
   $source = $sys::openbsd::params::mirror,
-  $emacs  = $sys::openbsd::params::emacs,
-  $python = $sys::openbsd::params::python,
-  $ruby   = $sys::openbsd::params::ruby,
 ) inherits sys::openbsd::params {
 
   # `/etc/pkg.conf` sets settings system-wide for the `pkg_*`

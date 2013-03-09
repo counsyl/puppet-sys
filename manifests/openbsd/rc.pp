@@ -1,7 +1,10 @@
+# == Define: sys::openbsd::rc
+#
 # This class creates a rc.conf file for an OpenBSD platform, using
 # the given settings.
 #
 # == Parameters
+#
 # [*settings*]
 #  This is an array of settings to use in the `rc.conf` file,
 #  and may be specified as either a Hash or a string value.
@@ -11,15 +14,20 @@
 #  to the associated setting.  The value will be automatically
 #  quoted, however, no quoting will occur if the setting value
 #  is not a hash.
+#
 # [*ensure*]
 #  The ensure for the file resource of the same name of this
 #  resource, defaults to 'file'.
+#
 # [*owner*]
 #  The owner of the rc.conf file, defaults to 'root'.
+#
 # [*group*]
 #  The group of the rc.conf file, defaults to 'wheel'.
+#
 # [*mode*]
 #  The mode of the rc.conf file, defaults to '0644'.
+#
 # [*template*]
 #  The template to use when generating the rc.conf file, defaults
 #  to "openbsd/rc.conf.erb".
