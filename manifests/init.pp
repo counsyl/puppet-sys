@@ -20,4 +20,14 @@ class sys {
       $root_group   = 'root'
     }
   }
+
+  # If we're on Debian-based systems, they use 'nogroup' instead of 'nobody'.
+  case $::osfamily {
+    debian: {
+      $nobody_group = 'nogroup'
+    }
+    default: {
+      $nobody_group = 'nobody'
+    }
+  }
 }
