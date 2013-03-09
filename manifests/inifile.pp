@@ -70,7 +70,7 @@ define sys::inifile(
   $owner    = 'root',
   $group    = 'root',
   $mode     = '0644',
-  $template = 'sys/inifile.erb',
+  $template = 'sys/inifile/inifile.erb',
 ) {
   file { $name:
     ensure  => file,
