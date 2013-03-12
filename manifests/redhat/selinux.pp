@@ -33,6 +33,6 @@ define sys::redhat::selinux(
       subscribe   => File['/etc/selinux/config'],
     }
   } else {
-    fail("Invalid SELINUX or SELINUXTYPE configuration values: ${name}, ${type}.\n")
+    fail('Invalid SELINUX or SELINUXTYPE configuration values.')
   }
 }

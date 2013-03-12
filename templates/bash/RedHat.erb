@@ -12,7 +12,7 @@ alias la='ls -a'
 <% if @editor -%>
 export EDITOR=<%= @editor %>
 <% end -%>
-export PATH=<%= bashpath %>
+export PATH=<%= @bashpath %>
 <% if @pythonpath -%>
 export PYTHONPATH=<%= @pythonpath %>
 <% end -%>

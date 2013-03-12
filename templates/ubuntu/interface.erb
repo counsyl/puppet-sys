@@ -6,33 +6,31 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-auto <%= device %>
-<% if ip == 'dhcp' -%>
-iface <%= device %> inet dhcp
+auto <%= @device %>
+<% if @ip == 'dhcp' -%>
+iface <%= @device %> inet dhcp
 <% else -%>
-iface <%= device %> inet static
-     address <%= ip %>
-     netmask <%= netmask %>
-     gateway <%= gateway %>
-<% if nameserver.is_a? Array -%>
-     dns-nameservers <%= nameserver.join(' ') %>
-<% elsif nameserver.is_a? String and nameserver != '' -%>
-     dns-nameservers <%= nameserver %>
+iface <%= @device %> inet static
+     address <%= @ip %>
+     netmask <%= @netmask %>
+     gateway <%= @gateway %>
+<% if @nameserver.is_a? Array -%>
+     dns-nameservers <%= @nameserver.join(' ') %>
+<% elsif @nameserver -%>
+     dns-nameservers <%= @nameserver %>
 <% end -%>
 <%# The domain and search options are mutually exclusive -%>
-<% if domain -%>
-     dns-domain <%= domain %>
-<% elsif search -%>
-<% if search.is_a? Array -%>
-     dns-search <%= search.join(' ') %>
-<% elsif search.is_a? String and search != '' -%>
-     dns-search <%= search %>
-<% end -%>
+<% if @domain -%>
+     dns-domain <%= @domain %>
+<% elsif @search.is_a? Array -%>
+     dns-search <%= @search.join(' ') %>
+<% elsif @search -%>
+     dns-search <%= @search %>
 <% end -%>
 <%# For any DNS sorting lists in resolv.conf -%>
-<% if sortlist.is_a? Array -%>
-     dns-sortlist <%= sortlist.join(' ') %>
-<% elsif sortlist.is_a? String and sortlist != '' -%>
-     dns-sortlist <%= sortlist %>
+<% if @sortlist.is_a? Array -%>
+     dns-sortlist <%= @sortlist.join(' ') %>
+<% elsif @sortlist -%>
+     dns-sortlist <%= @sortlist %>
 <% end -%>
 <% end -%>

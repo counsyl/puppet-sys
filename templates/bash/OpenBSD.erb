@@ -11,7 +11,7 @@ export EDITOR=<%= @editor %>
 <% end -%>
 
 # Minimalist path (e.g., no X11, games) for server systems.
-export PATH=<%= bashpath %>
+export PATH=<%= @bashpath %>
 <% if @pythonpath -%>
 export PYTHONPATH=<%= @pythonpath %>
 <% end -%>

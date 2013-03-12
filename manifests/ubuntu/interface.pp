@@ -55,14 +55,14 @@
 #
 define sys::ubuntu::interface(
   $ip,
-  $gateway=undef,
-  $nameserver=false,
-  $domain=false,
-  $search=false,
-  $netmask='255.255.255.0',
-  $sortlist=false,
-  $template='sys/ubuntu/interface.erb'
-  ) {
+  $gateway    = undef,
+  $nameserver = undef,
+  $domain     = undef,
+  $search     = undef,
+  $netmask    = '255.255.255.0',
+  $sortlist   = undef,
+  $template   = 'sys/ubuntu/interface.erb'
+){
   $device = $name
 
   if ($ip != 'dhcp') and ($gateway == undef) {

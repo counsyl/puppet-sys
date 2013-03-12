@@ -2,8 +2,11 @@
 #
 # Platform-dependent parameters for rsync.
 #
-class sys::rsync::params {
+class sys::rsync::params inherits sys {
+  $config_file = '/etc/rsyncd.conf'
   $package = 'rsync'
+  $service = 'rsync'
+
   case $::osfamily {
     openbsd: {
       include sys::openbsd::pkg
