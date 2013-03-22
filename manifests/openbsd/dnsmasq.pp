@@ -14,7 +14,7 @@ class sys::openbsd::dnsmasq(
   $rc_settings   = {
     'name'    => 'pkg_scripts',
     'value'   => 'dnsmasq',
-    'comment' => 'Start third-party package scripts, linke dnsmasq.',
+    'comment' => 'Start third-party package scripts, like dnsmasq.',
   },
   $template      = 'sys/openbsd/dnsmasq.conf.erb',
   $extra         = undef,
