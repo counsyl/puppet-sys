@@ -5,8 +5,11 @@
 #
 # === Parameters
 #
+# [*setting*]
+#  Required: the configuration setting name.
+#
 # [*value*]
-#  Required: the value of the configuration setting specified by $name.
+#  Required: the value of the configuration setting specified by $setting.
 #
 # [*repo*]
 #  Required: the path to the git repository.
@@ -22,6 +25,7 @@
 #  Path to the git binary, defaults to '/usr/bin/git'.
 #
 define sys::git::config(
+  $setting,
   $value,
   $repo,
   $user   = 'root',
@@ -35,11 +39,11 @@ define sys::git::config(
   $git = "${binary} config --${scope}"
   $quoted = shellquote($value)
   $pattern = shellquote("^${value}$")
-  $config_set = "${git} --get ${name} | grep ${pattern}"
-  $config_add = "${git} --add ${name} ${quoted}"
+  $config_set = "${git} --get ${setting} | grep ${pattern}"
+  $config_add = "${git} --add ${setting} ${quoted}"
 
   # Must have unique resource name.
-  $exec_name = "${repo}-${scope}-${name}-${value}"
+  $exec_name = "${repo}-${scope}-${setting}-${value}"
   exec { $exec_name:
     command => $config_add,
     cwd     => $repo,
