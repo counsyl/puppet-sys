@@ -4,7 +4,6 @@
 #
 class sys::bash (
   $ensure   = 'installed',
-  $alias    = 'bash',
   $package  = $bash::params::package,
   $source   = $bash::params::source,
   $provider = $bash::params::provider,
@@ -12,7 +11,6 @@ class sys::bash (
 ) inherits sys::bash::params {
   package { $package:
     ensure   => $ensure,
-    alias    => $alias,
     source   => $source,
     provider => $provider,
   }
