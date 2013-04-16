@@ -8,7 +8,6 @@
 #
 class sys::git (
   $ensure   = 'installed',
-  $alias    = 'git',
   $package  = $sys::git::params::package,
   $provider = $sys::git::params::provider,
   $source   = $sys::git::params::source,
@@ -17,7 +16,7 @@ class sys::git (
   # Install the package for git.
   package { $package:
     ensure   => $ensure,
-    alias    => $alias,
+    alias    => 'git',
     provider => $provider,
     source   => $source,
   }
