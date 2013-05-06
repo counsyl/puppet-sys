@@ -7,4 +7,4 @@ summary 'Common platform packages, resources and modules'
 description 'Common platform packages, resources and modules'
 project_page 'https://github.com/counsyl/puppet-sys.git'
 
-dependency 'puppetlabs/stdlib', '>=4.0.2'
+dependency 'puppetlabs/stdlib', '>= 3.2.0'
