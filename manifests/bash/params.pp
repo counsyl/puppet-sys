@@ -26,7 +26,7 @@ class sys::bash::params {
       $path     = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     }
     default: {
-      fail("The bash module is not supported on ${::operatingsystem}.\n")
+      fail("Don't know how to install bash on ${::osfamily}.\n")
     }
   }
 }
