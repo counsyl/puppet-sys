@@ -8,75 +8,28 @@
 # By default, this class enables all traffic access to the linkback interface,
 # and only allows external traffic for SSH and ICMP ping.
 #
-# === Parameters
-#
-#  [*ssh_port*]
-#   The port that SSH will listen on.  Defaults to 22.
-#
-class sys::iptables(
-  $ssh_port = '22',
-) inherits sys::iptables::params {
-
-  if $package {
-    # The package name for debian systems.
-    package { $package:
-      ensure => installed,
-      before => Exec['persist-firewall'],
-    }
-
-    # Ensure the `iptables-persistent` service is enabled; this isn't a
-    # "real" service, as it just loads up the iptables rules from file
-    # after a reboot.
-    service { $service:
-      ensure     => running,
-      enable     => true,
-      hasrestart => true,
-      hasstatus  => $hasstatus,
-      status     => $status,
-      require    => Package[$package],
-    }
-  }
-    
-  # This command persists the iptables to the rules file of the platform.
-  exec { 'persist-firewall':
-    command     => "/sbin/iptables-save > ${rules}",
-    refreshonly => true,
-    logoutput   => 'on_failure',
+class sys::iptables {
+  if ! defined('firewall') {
+    fail("sys::iptables requires puppetlabs-firewall module\n")
   }
 
-  # On every firewall rule, ensure that we notify the persistence command
-  # (so that the rules will be loaded on machine reboot).
-  Firewall {
-    notify => Exec['persist-firewall']
-  }
-
-  firewall { '000 allow packets with valid state':
-    action => 'accept',
-    state  => [ 'RELATED', 'ESTABLISHED' ],
-  }
-
-  firewall { '001 allow icmp ping':
-    action => 'accept',
-    proto  => 'icmp',
-    icmp   => 'echo-request',
-  }
-
-  firewall { '002 allow all to lo interface':
-    action  => 'accept',
-    iniface => 'lo',
-  }
-
-  firewall { '010 allow ssh':
-    action => 'accept',
-    proto  => 'tcp',
-    dport  => $ssh_port,
-  }
-
-  firewall { '999 drop everything else':
-    action => 'drop',
-  }
-
+  # Clears out any existing iptables rules, ensuring that only those
+  # from Puppet are used.
   resources { 'firewall':
     purge => true,
   }
+
+  # These defaults will ensure that the pre and post classes are run
+  # in the correct order, to prevent being locked out.
+  Firewall {
+    before  => Class['sys::iptables::post'],
+    require => Class['sys::iptables::pre'],
+  }
+
+  # Now declare the pre and post iptables dependencies.
+  class { ['sys::iptables::pre', 'sys::iptables::post']: }
+
+  # Declare the firewall resource -- this will autorequire the
+  # `iptables` / `iptables-persistent` packages and install them.
+  class { 'firewall': }
 }

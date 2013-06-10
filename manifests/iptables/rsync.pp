@@ -22,13 +22,11 @@ class sys::iptables::rsync(
     action => 'accept',
     proto  => 'tcp',
     dport  => $tcp_port,
-    notify => Exec['persist-firewall'],
   }
 
   firewall { "${priority} allow rsync udp":
     action => 'accept',
     proto  => 'udp',
     dport  => $udp_port,
-    notify => Exec['persist-firewall'],
   }
 }

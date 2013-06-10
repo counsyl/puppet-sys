@@ -20,6 +20,5 @@ class sys::iptables::puppet(
     action => 'accept',
     proto  => 'tcp',
     dport  => $puppet_port,
-    notify => Exec['persist-firewall'],
   }
 }
