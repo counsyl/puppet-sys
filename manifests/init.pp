@@ -1,12 +1,20 @@
 # == Class: sys
 #
-# The sys module is a placeholder for common platform-dependent constants.
+# The sys module is a placeholder for common platform-dependent constants,
+# including:
+#
+#  * $root_home:    The root user's home directory.
+#  * $root_group:   The default group used for root's files.
+#  * $binary_group: The default group used for system binaries.
+#  * $nobody_group: The group for the 'nobody' user.
 #
 class sys {
-  # Every OS has different groups it uses.  Generalized settings for:
-  # * $root_group:   The default group used for root's files.
-  # * $binary_group: The default group used for system binaries.
+  # Settings fo rthe root and binary groups.
   case $::osfamily {
+    darwin: {
+      $binary_group = 'wheel'
+      $root_group   = 'wheel'
+    }
     solaris: {
       $binary_group = 'bin'
       $root_group   = 'bin'
@@ -18,6 +26,16 @@ class sys {
     default: {
       $binary_group = 'root'
       $root_group   = 'root'
+    }
+  }
+
+  # The root home directory is different on OS X.
+  case $::osfamily {
+    darwin: {
+      $root_home = '/var/root'
+    }
+    default: {
+      $root_home = '/root'
     }
   }
 
