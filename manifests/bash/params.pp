@@ -4,6 +4,10 @@
 #
 class sys::bash::params {
   case $::osfamily {
+    darwin: {
+      # Bash is included by default on OS X.
+      $package = false
+    }
     openbsd: {
       include sys::openbsd::pkg
       $source   = $sys::openbsd::pkg::source

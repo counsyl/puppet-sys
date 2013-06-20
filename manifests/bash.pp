@@ -9,10 +9,12 @@ class sys::bash (
   $provider = $bash::params::provider,
   $extras   = $bash::params::extras,
 ) inherits sys::bash::params {
-  package { $package:
-    ensure   => $ensure,
-    source   => $source,
-    provider => $provider,
+  if $package {
+    package { $package:
+      ensure   => $ensure,
+      source   => $source,
+      provider => $provider,
+    }
   }
   if $extras {
     package { $extras:
