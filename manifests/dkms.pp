@@ -10,6 +10,12 @@ class sys::dkms(
     fail("DKMS support is only for Linux kernels.\n")
   }
 
+  if $::osfamily == 'RedHat' {
+    # DKMS is in EPEL.
+    include sys::redhat::epel
+    Class['sys::redhat::epel'] -> Package[$package]
+  }
+
   package { $package:
     ensure => $ensure,
   }
