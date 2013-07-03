@@ -1,24 +1,31 @@
 sys
 ===
 
-This module contains classes, defined types, and parameters to assist
-system administrators and module authors.  This includes modules for:
+This module contains classes, defined types, and parameters to assist system administrators and Puppet module authors.  This includes Puppet classes for:
 
-* Installing common system utilities such as bash, `gcc`, `git`, `rsync`,
-  `screen`, and `wget`:
+* Installing common system utilities, shells, and terminal managers:
  * `sys::bash`
  * `sys::gcc`
  * `sys::git`
+ * `sys::perl`
  * `sys::rsync`
  * `sys::screen`
+ * `sys::tmux`
  * `sys::wget`
+ * `sys::unzip`
+ * `sys::zsh`
 
-* OS-specific utilities and parameters for Ubuntu, RedHat, OpenBSD, and
-  Solaris platforms:
+* OS-specific utilities and parameters for Ubuntu, RedHat, OpenBSD, and Solaris platforms:
  * `sys::ubuntu`
  * `sys::redhat`
  * `sys::openbsd`
  * `sys::solaris`
+
+* SSH configuration and hardening with `sys::ssh`
+
+* `sys::iptables`: Sets up Linux firewwall rules using [puppetlabs-firewall](http://forge.puppetlabs.com/puppetlabs/firewall) (required)
+
+* `sys::inifile`: provides for [INI File](http://en.wikipedia.org/wiki/INI_file) creation
 
 License
 -------
