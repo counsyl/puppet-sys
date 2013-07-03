@@ -4,6 +4,10 @@
 #
 class sys::unzip::params {
   case $::osfamily {
+    darwin: {
+      $package = false
+      $path = '/usr/bin/unzip'
+    }
     openbsd: {
       include sys::openbsd::pkg
       $package = 'unzip'
