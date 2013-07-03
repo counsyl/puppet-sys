@@ -21,7 +21,7 @@ This module contains classes, defined types, and parameters to assist system adm
  * `sys::openbsd`
  * `sys::solaris`
 
-* SSH configuration and hardening with `sys::ssh`
+* `sys::ssh`: SSH configuration and hardening
 
 * `sys::iptables`: Sets up Linux firewwall rules using [puppetlabs-firewall](http://forge.puppetlabs.com/puppetlabs/firewall) (required)
 
