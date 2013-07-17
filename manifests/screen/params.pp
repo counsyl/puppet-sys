@@ -6,7 +6,11 @@ class sys::screen::params {
   case $::osfamily {
     openbsd: {
       include sys::openbsd
-      $package = 'screen'
+      if versioncmp($::kernelmajversion, '5.3') >= 0 {
+        $package = 'screen-4.0.3p3'
+      } else {
+        $package = 'screen-4.0.3p2'
+      }
       $source = $sys::openbsd::pkg::source
     }
     solaris: {
