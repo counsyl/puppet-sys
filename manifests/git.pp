@@ -1,10 +1,20 @@
 # == Class: sys::git
 #
-# Installs git.
+# Installs git, the distributed version control system.
 #
 # === Parameters
 #
-# All of the parameters are passed to the package provider.
+# [*ensure*]
+#  The ensure value for the git package resources, defaults to 'installed'.
+#
+# [*package*]
+#  The name of the git package to install, default is platform-dependent.
+#
+# [*provider*]
+#  The provider for the package resource, default is platform-dependent.
+#
+# [*source*]
+#  The source for the package resource, default is platform-dependent.
 #
 class sys::git (
   $ensure   = 'installed',

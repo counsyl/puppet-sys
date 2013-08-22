@@ -21,6 +21,8 @@ This module contains classes, defined types, and parameters to assist system adm
  * `sys::openbsd`
  * `sys::solaris`
 
+* `sys::dkms`: Installs DKMS to support dynamic linux kernel drivers.
+
 * `sys::ssh`: SSH configuration and hardening
 
 * `sys::iptables`: Sets up Linux firewwall rules using [puppetlabs-firewall](http://forge.puppetlabs.com/puppetlabs/firewall) (required)
