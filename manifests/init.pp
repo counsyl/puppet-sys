@@ -23,6 +23,10 @@ class sys {
       $binary_group = 'bin'
       $root_group   = 'wheel'
     }
+    windows: {
+      $binary_group = 'SYSTEM'
+      $root_group = 'Administrators'
+    }
     default: {
       $binary_group = 'root'
       $root_group   = 'root'
