@@ -16,6 +16,12 @@ class sys::wget::params {
       $path = '/usr/bin/wget'
       $provider = 'pkg'
     }
+    windows: {
+      $package = false
+      # Windows-specific parameters.
+      $ps_path = 'C:/WINDOWS/sysnative/wget.ps1'
+      $ps_template = 'sys/wget/wget.ps1.erb'
+    }
     default: {
       $package = 'wget'
       $path = '/usr/bin/wget'
