@@ -5,20 +5,22 @@
 class sys::screen::params {
   case $::osfamily {
     openbsd: {
-      include sys::openbsd
+      include sys::openbsd::pkg
+      $package = 'screen'
       if versioncmp($::kernelmajversion, '5.3') >= 0 {
-        $package = 'screen-4.0.3p3'
+        $ensure = '4.0.3p3'
       } else {
-        $package = 'screen-4.0.3p2'
+        $ensure = '4.0.3p2'
       }
-      $source = $sys::openbsd::pkg::source
     }
     solaris: {
       include sys::solaris
+      $ensure = 'installed'
       $package = 'terminal/screen'
       $provider = 'pkg'
     }
     default: {
+      $ensure = 'installed'
       $package = 'screen'
     }
   }
