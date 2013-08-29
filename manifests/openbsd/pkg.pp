@@ -21,4 +21,7 @@ class sys::openbsd::pkg (
     mode    => '0644',
     content => "# OpenBSD pkg.conf\ninstallpath=${source}\n",
   }
+
+  # Ensure the file is in place for OpenBSD's package provider.
+  File[$config] -> Package <| |>
 }
