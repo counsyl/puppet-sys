@@ -22,7 +22,7 @@ class sys::nfs(
   $package  = $sys::nfs::params::client,
   $source   = $sys::nfs::params::source,
   $provider = $sys::nfs::params::provider,
-) {
+) inherits sys::nfs::params {
   if $package {
     package { $package:
       ensure   => $ensure,
