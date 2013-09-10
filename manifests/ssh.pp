@@ -67,6 +67,9 @@
 #  a login (e.g., checking whether ~/.ssh is world-readable).  Defaults
 #  to true.
 #
+# [*agent_forwarding*]
+#  Whether or not to allow agent forwarding, defaults to false.
+#
 # [*tcp_forwarding*]
 #  Allows TCP forwarding by the SSH daemon, defaults to false.
 #
