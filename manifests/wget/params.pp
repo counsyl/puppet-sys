@@ -19,7 +19,7 @@ class sys::wget::params {
     windows: {
       $package = false
       # Windows-specific parameters.
-      $ps_path = 'C:/WINDOWS/sysnative/wget.ps1'
+      $path = 'C:/WINDOWS/sysnative/wget.ps1'
       $ps_template = 'sys/wget/wget.ps1.erb'
     }
     default: {

@@ -7,7 +7,7 @@ class sys::wget (
   $package     = $sys::wget::params::package,
   $source      = $sys::wget::params::source,
   $provider    = $sys::wget::params::provider,
-  $ps_path     = $sys::wget::params::ps_path,
+  $path        = $sys::wget::params::path,
   $ps_template = $sys::wget::params::ps_template,
 ) inherits sys::wget::params {
   if $::osfamily == 'windows' {
@@ -16,7 +16,7 @@ class sys::wget (
     # Note: a template is used here because files served from puppet
     #  modules may be on file shares that Puppet can't introspect
     #  permissions on.
-    file { $ps_path:
+    file { $path:
       ensure => file,
       owner   => $sys::binary_group,
       group   => $sys::root_group,
