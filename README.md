@@ -23,6 +23,8 @@ This module contains classes, defined types, and parameters to assist system adm
 
 * `sys::dkms`: Installs DKMS to support dynamic linux kernel drivers.
 
+* `sys::fetch`: Defined type for fetching files from URLs using wget or cURL.
+
 * `sys::nfs`: Installs NFS client libraries.
 
 * `sys::ssh`: SSH configuration and hardening
