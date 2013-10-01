@@ -64,6 +64,7 @@ define sys::ubuntu::interface(
   $template   = 'sys/ubuntu/interface.erb'
 ){
   $device = $name
+  warning("This type is deprecated, use the `sys::ubuntu::network` class.\n")
 
   if ($ip != 'dhcp') and ($gateway == undef) {
     fail("Must provide a gateway for a static IP address.\n")
