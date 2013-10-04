@@ -60,7 +60,7 @@ define sys::fetch(
       } else {
         $cert_check_opt = '--insecure'
       }
-      $output_opt = "--output='${destination}'"
+      $output_opt = "--output '${destination}'"
       $dl_cmd = '/usr/bin/curl --silent --location'
     }
     windows: {
