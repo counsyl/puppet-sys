@@ -2,6 +2,8 @@
 #
 # Fetch a file using a download program.
 #
+# Note: Windows support requires the joshcopper-powershell module.
+#
 # === Parameters
 #
 # [*destination*]
@@ -29,7 +31,7 @@
 #  implies no time limit on download).
 #
 # [*user*]
-#  The `user` value for the fetching `exec` resource, defaults to 'root'.
+#  The `user` value for the fetching `exec` resource, defaults is undefined.
 #
 define sys::fetch(
   $destination,
@@ -39,7 +41,7 @@ define sys::fetch(
   $logoutput    = 'on_failure',
   $path         = ['/bin', '/usr/bin', '/usr/local/bin'],
   $timeout      = '0',
-  $user         = 'root',
+  $user         = undef,
 ) {
 
   if $redownload {
@@ -61,6 +63,10 @@ define sys::fetch(
       $output_opt = "--output='${destination}'"
       $dl_cmd = '/usr/bin/curl --silent --location'
     }
+    windows: {
+      # Use PowerShell provider (via joshcooper's powershell module).
+      $provider = 'powershell'
+    }
     default: {
       # Use wget everywhere else.
       include sys::wget
@@ -74,16 +80,22 @@ define sys::fetch(
     }
   }
 
-  # Constructing download options string using stdlib's `join` function.
-  $dl_opts = join([$cert_check_opt, $output_opt, "'${source}'"], ' ')
+  if $::osfamily == 'windows' {
+    $command = "(New-Object Net.WebClient).DownloadFile('${source}', '${destination}')"
+  } else {
+    # Constructing download options string using stdlib's `join` function.
+    $dl_opts = join([$cert_check_opt, $output_opt, "'${source}'"], ' ')
+    $command = "${dl_cmd} ${dl_opts}"
+  }
 
   exec { "fetch-${name}":
-    command   => "${dl_cmd} ${dl_opts}",
+    command   => $command,
     user      => $user,
     timeout   => $timeout,
     logoutput => $logoutput,
     path      => $path,
     unless    => $unless,
     creates   => $creates,
+    provider  => $provider,
   }
 }
