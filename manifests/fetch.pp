@@ -44,7 +44,7 @@ define sys::fetch(
   $user         = undef,
 ) {
 
-  if $redownload {
+  if ($redownload and $::osfamily != 'windows') {
     $unless  = "test -s ${destination}"
     $creates = undef
   } else {
