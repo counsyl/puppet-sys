@@ -1,5 +1,5 @@
 name    'counsyl-sys'
-version '0.9.4'
+version '0.9.5'
 source  'git://github.counsyl.com/dev/puppet-sys.git'
 author  'Counsyl, Inc.'
 license 'Apache License, Version 2.0'
