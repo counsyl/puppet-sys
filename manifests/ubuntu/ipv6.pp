@@ -44,7 +44,7 @@ class sys::ubuntu::ipv6(
     line  => "net.ipv6.conf.default.disable_ipv6 = ${status}",
   }
 
-  file_line { 'iv6_lo_disable':
+  file_line { 'ipv6_lo_disable':
     path  => $sysctl,
     match => 'net.ipv6.conf.lo.disable_ipv6',
     line  => "net.ipv6.conf.lo.disable_ipv6 = ${status}",
