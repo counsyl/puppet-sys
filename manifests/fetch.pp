@@ -77,7 +77,7 @@ define sys::fetch(
       }
       $output_opt = "--output-document='${destination}'"
       $dl_cmd = "${sys::wget::path} --quiet"
-      $require = Class['sys::wget']
+      $fetch_require = Class['sys::wget']
     }
   }
 
@@ -98,6 +98,6 @@ define sys::fetch(
     unless    => $unless,
     creates   => $creates,
     provider  => $provider,
-    require   => $require,
+    require   => $fetch_require,
   }
 }
