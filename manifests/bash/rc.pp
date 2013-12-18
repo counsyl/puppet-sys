@@ -16,6 +16,11 @@
 # [*group*]
 #  The group to use for the resource file, defaults to undef.
 #
+# [*home*]
+#  The home directory the resource file is placed in, default
+#  is determined by username (e.g., '/root' for root, and '/home/${name}'
+#  for others).
+#
 # [*editor*]
 #  The value of EDITOR in the bash resource file, defaults to undef.
 #
@@ -37,6 +42,7 @@
 define sys::bash::rc(
   $ensure     = 'present',
   $group      = undef,
+  $home       = undef,
   $editor     = undef,
   $extra      = undef,
   $path       = undef,
@@ -63,19 +69,23 @@ define sys::bash::rc(
     $bashpath = $sys::bash::path
   }
 
+  if $home {
+    $homedir = $home
+  } else {
+    if $name == 'root' {
+      $homedir = '/root'
+    } else {
+      $homedir = "/home/${name}"
+    }
+  }
+
   # The template for the bash resource file; uses the following
   # variables from this scope:
   # * $bashpath
   # * $pythonpath
   # * $editor
   # * $extra
-  if $name == 'root' {
-    $home = '/root'
-  } else {
-    $home = "/home/${name}"
-  }
-
-  file { "${home}/.bashrc":
+  file { "${homedir}/.bashrc":
     ensure  => $file_ensure,
     owner   => $name,
     group   => $group,
@@ -84,17 +94,17 @@ define sys::bash::rc(
     require => Class['sys::bash'],
   }
 
-  file { "${home}/.bash_profile":
+  file { "${homedir}/.bash_profile":
     ensure  => $file_ensure,
     owner   => $name,
     group   => $group,
     mode    => '0600',
     content => "test -r ~/.bashrc && source ~/.bashrc\n",
-    require => File["${home}/.bashrc"],
+    require => File["${homedir}/.bashrc"],
   }
 
   if $::operatingsystem == Solaris {
-    file { "${home}/.zfs_completion":
+    file { "${homedir}/.zfs_completion":
       ensure => $file_ensure,
       mode   => '0600',
       owner  => $name,
