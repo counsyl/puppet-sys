@@ -24,8 +24,8 @@ class sys::iptables::pre(
   }
 
   firewall { '000 allow packets with valid state':
-    proto  => 'all',
     action => 'accept',
+    proto  => 'all',
     state  => [ 'RELATED', 'ESTABLISHED' ],
   }
 
@@ -40,6 +40,7 @@ class sys::iptables::pre(
   if $lo {
     firewall { '002 allow all to lo interface':
       action  => 'accept',
+      proto   => 'all',
       iniface => 'lo',
     }
   }
