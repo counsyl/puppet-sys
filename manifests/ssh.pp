@@ -5,6 +5,11 @@
 # == Parameters
 # [*port*]
 #  The port that the SSH daemon will listen on, defaults to 22.
+#  May be specified multiple times as an array.
+#
+# [*listen_address*]
+#  Specifies the address(es) to listen on, may be specifed as an array
+#  or a string.  Default is undefined (listen on all interfaces).
 #
 # [*acceptenv*]
 #  Array that specifies what environment variables sent by the client
@@ -31,12 +36,20 @@
 #  Specifies whether challenge-response authentication is allowed,
 #  defaults to true.
 #
+# [*ciphers*]
+#  Specifies the ciphers allowed for protocol version 2, must be
+#  given as an array.  Default is undefined.
+#
 # [*empty_passwords*]
 #  Whether or not to allow empty passwords, defaults to false.
 #
 # [*login_grace_time*]
 #  Time (in seconds) that the SSH daemon will disconnect if the
 #  user has not successfully logged in.  Defaults to 120.
+#
+# [*macs*]
+#  Specifies the available MAC (message authentication code) algorithms,
+#  must be given as an array.  Default is undefined.
 #
 # [*root_login*]
 #  Determines whether root logins are permitted, defaults to false.
@@ -86,7 +99,9 @@
 #
 class sys::ssh(
   $port                 = 22,
+  $listen_address       = undef,
   $acceptenv            = [ 'LANG', 'LC_*' ],
+  $ciphers              = undef,
   $allowusers           = false,
   $allowgroups          = false,
   $denyusers            = false,
@@ -94,6 +109,7 @@ class sys::ssh(
   $challenge_response   = false,
   $empty_passwords      = false,
   $login_grace_time     = 120,
+  $macs                 = undef,
   $root_login           = false,
   $rsa_auth             = true,
   $pubkey_auth          = true,

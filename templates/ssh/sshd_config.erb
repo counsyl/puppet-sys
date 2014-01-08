@@ -1,7 +1,20 @@
 <%# Use `sun_ssh` variable for quick Solaris checks. -%>
 <% sun_ssh = scope.lookupvar('::operatingsystem') == 'Solaris' -%>
 # General configuration.
+<% if scope.lookupvar('sys::ssh::port').is_a? Array -%>
+<% scope.lookupvar('sys::ssh::port').each do |ssh_port| -%>
+Port <%= ssh_port %>
+<% end -%>
+<% else -%>
 Port <%= scope.lookupvar('sys::ssh::port') %>
+<% end -%>
+<% if scope.lookupvar('sys::ssh::listen_address').is_a? Array -%>
+<% scope.lookupvar('sys::ssh::listen_address').each do |ssh_listen_address| -%>
+ListenAddress <%= ssh_listen_address %>
+<% end -%>
+<% elsif scope.lookupvar('sys::ssh::listen_address').is_a? String -%>
+ListenAddress <%= scope.lookupvar('sys::ssh::listen_address') %>
+<% end -%>
 <%# The SSH protocols allowed by the daemon, and determining if version 1 is allowed. -%>
 <% if scope.lookupvar('sys::ssh::protocol').is_a? Array -%>
 Protocol <%= scope.lookupvar('sys::ssh::protocol').join(',') %>
@@ -17,50 +30,50 @@ HostKey /etc/ssh/ssh_host_dsa_key
 <% if scope.lookupvar('sys::ssh::params::ecdsa') -%>
 HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
+<% if scope.lookupvar('sys::ssh::ciphers').is_a? Array -%>
+
+Ciphers <%= scope.lookupvar('sys::ssh::ciphers').join(',') %>
+<% end -%>
+<% if scope.lookupvar('sys::ssh::macs').is_a? Array -%>
+
+MACs <%= scope.lookupvar('sys::ssh::macs').join(',') %>
+<% end -%>
 
 # Privilege Separation setttings; enhances security if turned on.
 UsePrivilegeSeparation <%= @privilege_separation %>
 
-<%# If the `$denyusers` or `$denygroups` are defined, then set them up here. -%>
+<%# If the `$denyusers` or `$allowusers` are defined, then set them up here. -%>
 <% if scope.lookupvar('sys::ssh::denyusers') -%>
 # Deny the following users SSH access
 <% if scope.lookupvar('sys::ssh::denyusers').is_a? Array -%>
-DenyUsers <% scope.lookupvar('sys::ssh::denyusers').each do |user| -%><%= "#{user} " %><% end -%>
-
+DenyUsers <%= scope.lookupvar('sys::ssh::denyusers').join(' ') %>
 <% elsif scope.lookupvar('sys::ssh::denyusers') != '' -%>
-DenyUsers <%= scope.lookupvar('sys::ssh::denyusers') -%>
-
+DenyUsers <%= scope.lookupvar('sys::ssh::denyusers') %>
 <% end -%>
 <% end -%>
 <% if scope.lookupvar('sys::ssh::allowusers') -%>
 # Only allow the following users SSH access
 <% if scope.lookupvar('sys::ssh::allowusers').is_a? Array -%>
-AllowUsers <% scope.lookupvar('sys::ssh::allowusers').each do |user| -%><%= "#{user} " %><% end -%>
-
+AllowUsers <%= scope.lookupvar('sys::ssh::allowusers').join(' ') %>
 <% elsif scope.lookupvar('sys::ssh::allowusers') != '' -%>
-AllowUsers <%= scope.lookupvar('sys::ssh::allowusers') -%>
-
+AllowUsers <%= scope.lookupvar('sys::ssh::allowusers') %>
 <% end -%>
 <% end -%>
+<%# If the `$denygroups` or `$allowgroups` are defined, then set them up here. -%>
 <% if scope.lookupvar('sys::ssh::denygroups') -%>
 # Deny the following groups SSH access
 <% if scope.lookupvar('sys::ssh::denygroups').is_a? Array -%>
-DenyGroups <% scope.lookupvar('sys::ssh::denygroups').each do |group| -%><%= "#{group} " %><% end -%>
-
+DenyGroups <%= scope.lookupvar('sys::ssh::denygroups').join(' ') %>
 <% elsif scope.lookupvar('sys::ssh::denygroups') != '' -%>
-DenyGroups <%= scope.lookupvar('sys::ssh::denygroups') -%>
-
+DenyGroups <%= scope.lookupvar('sys::ssh::denygroups') %>
 <% end -%>
 <% end -%>
-<%# If the `$allowusers` or `$allowgroups` are defined, then set them up here. -%>
 <% if scope.lookupvar('sys::ssh::allowgroups') -%>
 # Only allow the following groups SSH access
 <% if scope.lookupvar('sys::ssh::allowgroups').is_a? Array -%>
-AllowGroups <% scope.lookupvar('sys::ssh::allowgroups').each do |group| -%><%= "#{group} " %><% end -%>
-
+AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups').join(' ') %>
 <% elsif scope.lookupvar('sys::ssh::allowgroups') != '' -%>
-AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups') -%>
-
+AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups') %>
 <% end -%>
 <% end -%>
 
