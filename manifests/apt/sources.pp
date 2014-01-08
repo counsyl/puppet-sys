@@ -19,15 +19,15 @@
 #
 # This resource declaration:
 #
-#   apt::sources { '/etc/apt/sources.list':
-#     repositories => [
-#       { 'uri'          => 'http://us.archive.ubuntu.com/ubuntu/',
-#         'distribution' => 'precise',
-#         'components'   => ['main', 'restricted'],
-#       }
-#     ],
-#     source       => false,
-#   }
+#    sys::apt::sources { '/etc/apt/sources.list':
+#      repositories => [
+#        { 'uri'          => 'http://us.archive.ubuntu.com/ubuntu/',
+#          'distribution' => 'precise',
+#          'components'   => ['main', 'restricted'],
+#        }
+#      ],
+#      source       => false,
+#    }
 #
 # Produces the following content at `/etc/apt/sources.list`:
 #
