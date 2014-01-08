@@ -16,28 +16,28 @@
 #
 # Dynamically get network information for eth0:
 #
-#   class sys::ubuntu::network {
-#     interfaces => {
-#       'eth0' => {
-#         'method' => 'dhcp',
-#       }
-#     }
-#   }
+#    class sys::ubuntu::network {
+#      interfaces => {
+#        'eth0' => {
+#          'method' => 'dhcp',
+#        }
+#      }
+#    }
 #
 # Have eth0 configured with DHCP and a static IP for eth1:
 #
-#   class sys::ubuntu::network {
-#     interfaces => {
-#       'eth0' => {
-#         'method'  => 'dhcp',
-#       },
-#       'eth1' => {
-#         'method'  => 'static',
-#         'address' => '192.168.1.100',
-#         'gateway' => '192.168.1.1',
-#       },
-#     }
-#   }
+#    class sys::ubuntu::network {
+#      interfaces => {
+#        'eth0' => {
+#          'method'  => 'dhcp',
+#        },
+#        'eth1' => {
+#          'method'  => 'static',
+#          'address' => '192.168.1.100',
+#          'gateway' => '192.168.1.1',
+#        },
+#      }
+#    }
 #
 class sys::ubuntu::network(
   $interfaces,
