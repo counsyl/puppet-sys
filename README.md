@@ -15,7 +15,8 @@ This module contains classes, defined types, and parameters to assist system adm
  * `sys::unzip`
  * `sys::zsh`
 
-* OS-specific utilities and parameters for Ubuntu, RedHat, OpenBSD, and Solaris platforms:
+* OS-specific utilities and parameters for Debian/Ubuntu, RedHat, OpenBSD, and Solaris platforms:
+ * `sys::apt`
  * `sys::ubuntu`
  * `sys::redhat`
  * `sys::openbsd`
