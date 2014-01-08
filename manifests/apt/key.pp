@@ -53,7 +53,7 @@ define sys::apt::key(
   }
 
   # Determine how the key was passed in with regular expressions.
-  if $key =~ /^puppet:///.+\.gpg$/ {
+  if $key =~ /^puppet:\/\/\/.+\.gpg$/ {
     include sys::apt
     $basename = inline_template("<%= File.basename(@key) %>")
     $apt_key = "${sys::apt::trusted_d}/${basename}"
