@@ -8,7 +8,27 @@
 # By default, this class enables all traffic access to the linkback interface,
 # and only allows external traffic for SSH and ICMP ping.
 #
-class sys::iptables {
+# === Parameters
+#
+# [*ssh_port*]
+#  The port that SSH will listen on, defaults to 22 or set to false to
+#  disable.
+#
+# [*ping*]
+#  Allow ICMP ping through the firewall?  Defaults to true.
+#
+# [*lo*]
+#  Accept all packets on the linkback (lo) interface?  Defaults to true.
+#
+# [*iniface*]
+#  Interface to apply iptables to, default is undefined.
+#
+class sys::iptables(
+  $ssh_port = '22',
+  $ping     = true,
+  $lo       = true,
+  $iniface  = undef,
+){
   if ! defined('firewall') {
     fail("sys::iptables requires puppetlabs-firewall module\n")
   }
@@ -27,7 +47,16 @@ class sys::iptables {
   }
 
   # Now declare the pre and post iptables dependencies.
-  class { ['sys::iptables::pre', 'sys::iptables::post']: }
+  class { 'sys::iptables::pre':
+    ssh_port => $ssh_port,
+    ping     => $ping,
+    lo       => $lo,
+    iniface  => $iniface,
+  }
+
+  class { 'sys::iptables::post':
+    iniface => $iniface,
+  }
 
   # Declare the firewall resource -- this will autorequire the
   # `iptables` / `iptables-persistent` packages and install them.

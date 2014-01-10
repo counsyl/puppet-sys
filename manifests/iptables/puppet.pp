@@ -12,13 +12,18 @@
 # [*priority*]
 #  The priority for the puppet firewall rule, defaults to 100.
 #
+# [*iniface*]
+#  Interface to apply iptables to, default is undefined.
+#
 class sys::iptables::puppet(
   $puppet_port = '8140',
   $priority    = '100',
+  $iniface     = undef,
 ) {
   firewall { "${priority} allow puppet":
-    action => 'accept',
-    proto  => 'tcp',
-    dport  => $puppet_port,
+    action  => 'accept',
+    proto   => 'tcp',
+    dport   => $puppet_port,
+    iniface => $iniface,
   }
 }
