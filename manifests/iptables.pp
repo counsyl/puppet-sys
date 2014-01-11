@@ -28,6 +28,7 @@ class sys::iptables(
   $ping     = true,
   $lo       = true,
   $iniface  = undef,
+  $purge    = true,
 ){
   if ! defined('firewall') {
     fail("sys::iptables requires puppetlabs-firewall module\n")
@@ -36,7 +37,7 @@ class sys::iptables(
   # Clears out any existing iptables rules, ensuring that only those
   # from Puppet are used.
   resources { 'firewall':
-    purge => true,
+    purge => $purge,
   }
 
   # These defaults will ensure that the pre and post classes are run
