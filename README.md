@@ -28,6 +28,8 @@ This module contains classes, defined types, and parameters to assist system adm
 
 * `sys::nfs`: Installs NFS client libraries.
 
+* `sys::parted`: Installs GNU Parted on Linux systems.
+
 * `sys::ssh`: SSH configuration and hardening
 
 * `sys::iptables`: Sets up Linux firewwall rules using [puppetlabs-firewall](http://forge.puppetlabs.com/puppetlabs/firewall) (required)
