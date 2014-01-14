@@ -9,7 +9,7 @@
 #  * $nobody_group: The group for the 'nobody' user.
 #
 class sys {
-  # Settings fo rthe root and binary groups.
+  # Settings for the root and binary groups.
   case $::osfamily {
     darwin: {
       $binary_group = 'wheel'
