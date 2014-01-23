@@ -78,8 +78,8 @@ AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups') %>
 <% end -%>
 
 # Logging
-SyslogFacility AUTH
-LogLevel INFO
+SyslogFacility <%= scope.lookupvar('sys::ssh::log_level') %>
+LogLevel <%= scope.lookupvar('sys::ssh::syslog_facility') %>
 
 # Authentication settings.
 LoginGraceTime <%= scope.lookupvar('sys::ssh::login_grace_time') %>

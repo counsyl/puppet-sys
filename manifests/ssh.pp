@@ -47,6 +47,9 @@
 #  Time (in seconds) that the SSH daemon will disconnect if the
 #  user has not successfully logged in.  Defaults to 120.
 #
+# [*log_level*]
+#  The logging level of the SSH daemon, defaults to 'INFO'.
+#
 # [*macs*]
 #  Specifies the available MAC (message authentication code) algorithms,
 #  must be given as an array.  Default is undefined.
@@ -75,10 +78,13 @@
 #  Whether or not to enable the SFTP subsystem, defaults to true.
 #
 # [*strict_modes*]
-#  Determines whether the SSH daemone should check file permissions and
+#  Determines whether the SSH daemon should check file permissions and
 #  and ownership of the user's files and home directory before allowing
 #  a login (e.g., checking whether ~/.ssh is world-readable).  Defaults
 #  to true.
+#
+# [*syslog_facility*]
+#  The syslog facility for the SSH daemon, defaults to 'AUTH'.
 #
 # [*agent_forwarding*]
 #  Whether or not to allow agent forwarding, defaults to false.
@@ -109,6 +115,7 @@ class sys::ssh(
   $challenge_response   = false,
   $empty_passwords      = false,
   $login_grace_time     = 120,
+  $log_level            = 'INFO',
   $macs                 = undef,
   $root_login           = false,
   $rsa_auth             = true,
@@ -118,6 +125,7 @@ class sys::ssh(
   $protocol             = 2,
   $sftp                 = true,
   $strict_modes         = true,
+  $syslog_facility      = 'AUTH',
   $agent_forwarding     = false,
   $tcp_forwarding       = false,
   $tcp_keepalive        = true,
