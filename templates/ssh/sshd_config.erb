@@ -30,6 +30,11 @@ HostKey /etc/ssh/ssh_host_dsa_key
 <% if scope.lookupvar('sys::ssh::params::ecdsa') -%>
 HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
+<% if scope.lookupvar('sys::ssh::authorized_keys_file') -%>
+
+# Location of authorized keys.
+AuthorizedKeysFile <%= scope.lookupvar('sys::ssh::authorized_keys_file') %>
+<% end -%>
 <% if scope.lookupvar('sys::ssh::ciphers').is_a? Array -%>
 
 Ciphers <%= scope.lookupvar('sys::ssh::ciphers').join(',') %>
