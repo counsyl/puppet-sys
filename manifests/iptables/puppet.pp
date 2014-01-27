@@ -6,7 +6,7 @@
 #
 # === Parameters
 #
-# [*puppet_port*]
+# [*port*]
 #  This is the TCP port for Puppet, defaults to 8140.
 #
 # [*priority*]
@@ -16,14 +16,14 @@
 #  Interface to apply iptables to, default is undefined.
 #
 class sys::iptables::puppet(
-  $puppet_port = '8140',
-  $priority    = '100',
-  $iniface     = undef,
+  $port     = '8140',
+  $priority = '100',
+  $iniface  = undef,
 ) {
   firewall { "${priority} allow puppet":
     action  => 'accept',
     proto   => 'tcp',
-    dport   => $puppet_port,
+    dport   => $port,
     iniface => $iniface,
   }
 }

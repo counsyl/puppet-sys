@@ -4,7 +4,7 @@
 #
 # === Parameters
 #
-# [*tcp_port*]
+# [*port*]
 #  The TCP port for redis traffic, defaults to 6379.
 #
 # [*priority*]
@@ -14,13 +14,13 @@
 #  Interface to apply iptables to, default is undefined.
 #
 class sys::iptables::redis(
-  $tcp_port = '6379',
+  $port     = '6379',
   $priority = '100',
   $iniface  = undef,
 ){
   firewall { "${priority} allow redis tcp":
     action => 'accept',
     proto  => 'tcp',
-    dport  => $tcp_port,
+    dport  => $port,
   }
 }
