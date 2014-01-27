@@ -8,7 +8,7 @@
 #  The ensure value to use for the htop package.  Defaults to 'installed'.
 #
 # [*package*]
-#  The name of the package to install; the default depens on the OS, most
+#  The name of the package to install; the default depends on the OS, most
 #  likely it is 'htop'.
 #
 class sys::htop(
