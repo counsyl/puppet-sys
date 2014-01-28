@@ -20,8 +20,20 @@ class sys::git::params {
     redhat: {
       $package  = 'git-core'
     }
+    windows: {
+      $version  = '1.8.5.2-preview20131230'
+      $basename = "Git-${version}.exe"
+      $package = "Git version ${version}"
+      $install_options = ['/VERYSILENT']
+      $base_url = 'http://msysgit.googlecode.com/files/'
+      if $::architecture == 'x64' {
+        $win_path = 'C:\Program Files (x86)\Git\cmd'
+      } else {
+        $win_path = 'C:\Program Files\Git\cmd'
+      }
+    }
     default: {
-      fail("Do not know how to install git on ${::operatingsystem}.\n")
+      fail("Do not know how to install git on ${::osfamily}.\n")
     }
   }
 }
