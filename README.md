@@ -34,6 +34,8 @@ This module contains classes, defined types, and parameters to assist system adm
 
 * `sys::ssh`: SSH configuration and hardening
 
+* `sys::stat`: For performance monitoring utilities like `iostat`.
+
 * `sys::iptables`: Sets up Linux firewwall rules using [puppetlabs-firewall](http://forge.puppetlabs.com/puppetlabs/firewall) (required)
 
 * `sys::inifile`: provides for [INI File](http://en.wikipedia.org/wiki/INI_file) creation
