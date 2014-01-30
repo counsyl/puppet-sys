@@ -11,6 +11,7 @@ class sys::openbsd::dnsmasq(
   $expand_hosts  = true,
   $forwarders    = ['8.8.8.8', '8.8.4.4'],
   $default_lease = '24h',
+  $rc_local      = '/etc/rc.conf.local',
   $rc_settings   = {
     'name'    => 'pkg_scripts',
     'value'   => 'dnsmasq',
@@ -34,11 +35,12 @@ class sys::openbsd::dnsmasq(
     content => template($template),
     require => Package['dnsmasq'],
   }
-  
-  $rc_local = '/etc/rc.conf.local'
-  openbsd::rc { $rc_local:
-    settings => [$rc_settings],
-    require  => File[$config],
+
+  if $rc_local {
+    sys::openbsd::rc { $rc_local:
+      settings => [$rc_settings],
+      require  => File[$config],
+    }
   }
 
   service { 'dnsmasq':
