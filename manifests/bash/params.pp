@@ -7,27 +7,33 @@ class sys::bash::params {
     darwin: {
       # Bash is included by default on OS X.
       $package = false
+      $path    = '/bin/bash'
+      $defpath = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin'
     }
     openbsd: {
       include sys::openbsd::pkg
-      $source   = $sys::openbsd::pkg::source
-      $extras   = 'colorls'
-      $package  = 'bash'
-      $path     = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/libexec'
+      $source  = $sys::openbsd::pkg::source
+      $extras  = 'colorls'
+      $package = 'bash'
+      $path    = '/usr/local/bin/bash'
+      $defpath = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/libexec'
     }
     solaris: {
       include sys::solaris
       $provider = 'pkg'
       $package  = 'shell/bash'
-      $path     = $sys::solaris::path
+      $path     = '/usr/bin/bash'
+      $defpath  = $sys::solaris::path
     }
     redhat: {
       $package  = 'bash'
-      $path     = '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
+      $path     = '/bin/bash'
+      $defpath  = '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
     }
     debian: {
       $package  = 'bash'
-      $path     = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+      $path     = '/bin/bash'
+      $defpath  = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     }
     default: {
       fail("Don't know how to install bash on ${::osfamily}.\n")

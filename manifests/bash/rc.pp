@@ -66,7 +66,7 @@ define sys::bash::rc(
   if $path != '' {
     $bashpath = $path
   } else {
-    $bashpath = $sys::bash::path
+    $bashpath = $sys::bash::defpath
   }
 
   if $home {
