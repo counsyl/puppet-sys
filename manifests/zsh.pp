@@ -8,9 +8,11 @@ class sys::zsh (
   $source   = $zsh::params::source,
   $provider = $zsh::params::provider,
 ) inherits sys::zsh::params {
-  package { $package:
-    ensure   => $ensure,
-    source   => $source,
-    provider => $provider,
+  if $package {
+    package { $package:
+      ensure   => $ensure,
+      source   => $source,
+      provider => $provider,
+    }
   }
 }
