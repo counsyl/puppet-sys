@@ -12,6 +12,7 @@ This module contains classes, defined types, and parameters to assist system adm
  * `sys::perl`
  * `sys::rsync`
  * `sys::screen`
+ * `sys::tcsh`
  * `sys::tmux`
  * `sys::wget`
  * `sys::unzip`
