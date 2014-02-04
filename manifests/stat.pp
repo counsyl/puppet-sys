@@ -1,7 +1,7 @@
 # == Class: sys::stat
 #
-# Installs sysstat, which contains various system performance monitoring tools,
-# e.g., like `iostat`.
+# Installs sysstat, which contains various system performance monitoring tools
+# like `iostat`.
 #
 # === Parameters
 #

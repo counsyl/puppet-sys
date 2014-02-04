@@ -8,8 +8,11 @@ class sys::stat::params {
       # Unix-derived systems have iostat built in.
       $package = false
     }
-    default: {
+    debian, redhat: {
       $package = 'sysstat'
+    }
+    default: {
+      fail("Don't know how to install sysstat on ${::osfamily}.\n")
     }
   }
 }
