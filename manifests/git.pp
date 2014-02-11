@@ -25,7 +25,7 @@
 #  end in a slash.
 #
 # [*win_path*]
-#  Windows-only option, if git directory to be added to the Windows %Path%.
+#  Windows-only option, if set this directory is added to the Windows %Path%.
 #
 class sys::git (
   $ensure          = 'installed',
