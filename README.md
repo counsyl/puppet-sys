@@ -29,6 +29,8 @@ This module contains classes, defined types, and parameters to assist system adm
 
 * `sys::fetch`: Defined type for fetching files from URLs using wget or cURL.
 
+* `sys::luks`: Installs `cryptsetup` package for encrypted drive support on Linux.
+
 * `sys::nfs`: Installs NFS client libraries.
 
 * `sys::parted`: Installs GNU Parted on Linux systems.
