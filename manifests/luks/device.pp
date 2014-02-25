@@ -79,11 +79,10 @@ define sys::luks::device(
   }
 
   exec { $create_key:
-    command     => $create_key_cmd,
-    user        => 'root',
-    unless      => "/usr/bin/test -b ${devmapper}",
-    refreshonly => true,
-    notify      => Exec[$luks_open],
+    command => $create_key_cmd,
+    user    => 'root',
+    unless  => "/usr/bin/test -b ${devmapper}",
+    notify  => Exec[$luks_open],
   }
 
   # Format as LUKS device if it isn't already.
