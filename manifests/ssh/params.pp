@@ -81,5 +81,6 @@ class sys::ssh::params {
 
   # Global known hosts should be same across all platforms (except
   # Cygwin, which is another story).
-  $known_hosts = '/etc/ssh/ssh_known_hosts'
+  $etc_ssh = '/etc/ssh'
+  $known_hosts = "${etc_ssh}/ssh_known_hosts"
 }
