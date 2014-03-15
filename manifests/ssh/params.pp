@@ -46,7 +46,7 @@ class sys::ssh::params {
       } else {
         $ecdsa = false
       }
-      
+
       $client = 'openssh-client'
       $server = 'openssh-server'
       $service = 'ssh'
@@ -78,4 +78,8 @@ class sys::ssh::params {
       $sshd_config = '/etc/ssh/sshd_config'
     }
   }
+
+  # Global known hosts should be same across all platforms (except
+  # Cygwin, which is another story).
+  $known_hosts = '/etc/ssh/ssh_known_hosts'
 }
