@@ -134,7 +134,6 @@ class sys::ssh(
   $x11_forwarding       = false,
 ){
   anchor { 'sys::ssh::start': }  ->
-  class { 'sys::ssh::params': }  ->
   class { 'sys::ssh::install': } ->
   class { 'sys::ssh::config': }  ->
   class { 'sys::ssh::service': } ->

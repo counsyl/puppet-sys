@@ -27,7 +27,7 @@ Protocol <%= scope.lookupvar('sys::ssh::protocol') %>
 # Host key locations.
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
-<% if scope.lookupvar('sys::ssh::params::ecdsa') -%>
+<% if @ecdsa -%>
 HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
 <% if scope.lookupvar('sys::ssh::authorized_keys_file') -%>
@@ -113,7 +113,7 @@ PasswordAuthentication <% if scope.lookupvar('sys::ssh::password_auth') %>yes<% 
 <% if sun_ssh -%>
 KbdInteractiveAuthentication <% if scope.lookupvar('sys::ssh::password_auth') %>yes<% else %>no<% end %>
 <% end -%>
-<% if scope.lookupvar('sys::ssh::params::use_pam') -%>
+<% if @use_pam -%>
 UsePAM yes
 <% end -%>
 
@@ -124,7 +124,7 @@ X11Forwarding <% if scope.lookupvar('sys::ssh::x11_forwarding') %>yes<% else %>n
 AllowAgentForwarding <% if scope.lookupvar('sys::ssh::agent_forwarding') %>yes<% else %>no<% end %>
 <% end -%>
 
-PrintMotd <% if scope.lookupvar('sys::ssh::params::use_pam') or sun_ssh %>no<% else %>yes<% end %>
+PrintMotd <% if @use_pam or sun_ssh %>no<% else %>yes<% end %>
 PrintLastLog yes
 <% if not sun_ssh then %>
 TCPKeepAlive <% if scope.lookupvar('sys::ssh::tcp_keepalive') %>yes<% else %>no<% end %>
@@ -137,5 +137,5 @@ KeepAlive <% if scope.lookupvar('sys::ssh::tcp_keepalive') %>yes<% else %>no<% e
 <% end -%>
 <% if scope.lookupvar('sys::ssh::sftp') -%>
 
-Subsystem sftp <%= scope.lookupvar('sys::ssh::params::sftp_subsystem') %>
+Subsystem sftp <%= @sftp_subsystem %> %>
 <% end -%>
