@@ -26,6 +26,8 @@ class sys::iptables::web(
   $priority   = '100',
   $iniface    = undef,
 ){
+  include sys::iptables
+
   if $http_port {
     firewall { "${priority} allow http":
       action  => 'accept',

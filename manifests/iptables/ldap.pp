@@ -27,6 +27,8 @@ class sys::iptables::ldap(
   $source   = undef,
   $iniface  = undef,
 ){
+  include sys::iptables
+
   if $port {
     firewall { "${priority} allow ldap":
       action  => 'accept',
