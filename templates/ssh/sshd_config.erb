@@ -137,5 +137,5 @@ KeepAlive <% if scope.lookupvar('sys::ssh::tcp_keepalive') %>yes<% else %>no<% e
 <% end -%>
 <% if scope.lookupvar('sys::ssh::sftp') -%>
 
-Subsystem sftp <%= @sftp_subsystem %> %>
+Subsystem sftp <%= @sftp_subsystem %>
 <% end -%>
