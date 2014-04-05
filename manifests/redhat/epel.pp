@@ -7,11 +7,11 @@ class sys::redhat::epel {
   case $::operatingsystemrelease {
     /5\.*/: {
       $epel_name = 'epel-release-5-4'
-      $epel_rpm  = "http://dl.fedoraproject.com/pub/epel/5/i386/${epel_name}.noarch.rpm"
+      $epel_rpm  = "http://download.fedoraproject.org/pub/epel/5/i386/${epel_name}.noarch.rpm"
     }
     /6\.*/: {
       $epel_name = 'epel-release-6-8'
-      $epel_rpm  = "http://dl.fedoraproject.com/pub/epel/6/i386/${epel_name}.noarch.rpm"
+      $epel_rpm  = "http://download.fedoraproject.org/pub/epel/6/i386/${epel_name}.noarch.rpm"
     }
     default: {
       fail("Do not know how to install EPEL on RedHat release: ${::operatingsystemrelase}.\n")
