@@ -21,7 +21,7 @@ class sys::git::params {
       $package  = 'git-core'
     }
     windows: {
-      $version  = '1.8.5.2-preview20131230'
+      $version = '1.9.0-preview20140217'
       $basename = "Git-${version}.exe"
       $package = "Git version ${version}"
       $install_options = ['/VERYSILENT']
