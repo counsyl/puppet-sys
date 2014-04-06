@@ -5,11 +5,11 @@
 class sys::redhat::epel {
   # Getting the right RPM depending on this RedHat release.
   case $::operatingsystemrelease {
-    /5\.*/: {
+    /^5\.\d+$/: {
       $epel_name = 'epel-release-5-4'
       $epel_rpm  = "http://download.fedoraproject.org/pub/epel/5/i386/${epel_name}.noarch.rpm"
     }
-    /6\.*/: {
+    /^6\.\d+$/: {
       $epel_name = 'epel-release-6-8'
       $epel_rpm  = "http://download.fedoraproject.org/pub/epel/6/i386/${epel_name}.noarch.rpm"
     }
