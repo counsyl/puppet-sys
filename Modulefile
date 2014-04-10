@@ -1,10 +1,10 @@
 name    'counsyl-sys'
 version '0.9.13'
-source  'git://github.com/dev/puppet-sys.git'
+source  'git://github.com/counsyl/puppet-sys.git'
 author  'Counsyl, Inc.'
 license 'Apache License, Version 2.0'
 summary 'Common platform packages, resources and modules'
 description  'Common platform packages, resources and modules'
-project_page 'https://github.com/dev/puppet-sys'
+project_page 'https://github.com/counsyl/puppet-sys'
 
 dependency 'puppetlabs/stdlib', '>= 4.1.0'
