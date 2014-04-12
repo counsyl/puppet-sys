@@ -21,11 +21,11 @@ class sys::git::params {
       $package  = 'git-core'
     }
     windows: {
-      $version = '1.9.0-preview20140217'
+      $version = '1.9.2-preview20140411'
       $basename = "Git-${version}.exe"
       $package = "Git version ${version}"
       $install_options = ['/VERYSILENT']
-      $base_url = 'http://msysgit.googlecode.com/files/'
+      $base_url = "https://github.com/msysgit/msysgit/releases/download/Git-${version}/"
       if $::architecture == 'x64' {
         $win_path = 'C:\Program Files (x86)\Git\cmd'
       } else {
