@@ -7,38 +7,61 @@
 auto lo
 <% lo_if = @interfaces.fetch('lo', {}).merge(@defaults['lo']) -%>
 iface lo <%= lo_if['family'] %> <%= lo_if['method'] %>
-
 <% for interface in @interfaces.keys.sort -%>
-<%# Skip lo if in interfaces, already configured above -%>
-<%   if interface == 'lo' -%>
-<%     next -%>
-<%   end -%>
-<%   iface = @interfaces[interface] -%>
-<%   address = iface.fetch('address', nil) -%>
-<%   family = iface.fetch('family', @defaults['family']) -%>
-<%   gateway = iface.fetch('gateway', nil) -%>
-<%   method = iface.fetch('method', @defaults['method']) -%>
-<%   nameserver = iface.fetch('nameserver', nil) -%>
-<%   domain = iface.fetch('domain', nil) -%>
-<%   search = iface.fetch('search', nil) -%>
-<%   sortlist = iface.fetch('sortlist', nil) -%>
+<%
+     # Skip lo if in interfaces, already configured above
+     if interface == 'lo'
+       next
+     end
+
+     # Get default values from the interface hash.
+     iface = @interfaces[interface]
+     address = iface.fetch('address', nil)
+     broadcast = iface.fetch('broadcast', nil)
+     family = iface.fetch('family', @defaults['family'])
+     gateway = iface.fetch('gateway', nil)
+     method = iface.fetch('method', @defaults['method'])
+     metric = iface.fetch('metric', nil)
+     mtu = iface.fetch('mtu', nil)
+     nameserver = iface.fetch('nameserver', nil)
+     domain = iface.fetch('domain', nil)
+     search = iface.fetch('search', nil)
+     sortlist = iface.fetch('sortlist', nil)
+     pre_up = iface.fetch('pre-up', nil)
+     up = iface.fetch('up', nil)
+     post_up = iface.fetch('post-up', nil)
+     pre_down = iface.fetch('pre-down', nil)
+     down = iface.fetch('down', nil)
+     post_down = iface.fetch('post-down', nil)
+-%>
+
 auto <%= interface %>
 iface <%= interface %> <%= family %> <%= method %>
 <%   if address -%>
+<%# Static network configuration -%>
     address <%= address %>
     netmask <%= iface.fetch('netmask', @defaults['netmask']) %>
-<%   end -%>
-<%   if gateway -%>
+<%     if gateway -%>
     gateway <%= gateway %>
+<%     end -%>
+<%     if broadcast -%>
+    broadcast <%= broadcast %>
+<%     end -%>
+<%     if metric -%>
+    metric <%= metric %>
+<%     end -%>
+<%     if mtu -%>
+    mtu <%= mtu %>
+<%     end -%>
 <%   end -%>
 <%   if nameserver.is_a? Array -%>
     dns-nameservers <%= nameserver.join(' ') %>
 <%   elsif nameserver -%>
     dns-nameservers <%= nameserver %>
-<% end -%>
+<%   end -%>
 <%# The domain and search options are mutually exclusive -%>
 <%   if domain -%>
-     dns-domain <%= domain %>
+    dns-domain <%= domain %>
 <%   elsif search.is_a? Array -%>
     dns-search <%= search.join(' ') %>
 <%   elsif search -%>
@@ -49,5 +72,48 @@ iface <%= interface %> <%= family %> <%= method %>
     dns-sortlist <%= sortlist.join(' ') %>
 <%   elsif sortlist -%>
     dns-sortlist <%= sortlist %>
+<%   end -%>
+<%# Interface commands -%>
+<%   if pre_up.is_a? Array -%>
+<%     pre_up.each do |pre_up_cmd| -%>
+    pre-up <%= pre_up_cmd %>
+<%     end -%>
+<%   elsif pre_up -%>
+    pre-up <%= pre_up %>
+<%   end -%>
+<%   if up.is_a? Array -%>
+<%     up.each do |up_cmd| -%>
+    up <%= up_cmd %>
+<%     end -%>
+<%   elsif up -%>
+    up <%= up %>
+<%   end -%>
+<%   if post_up.is_a? Array -%>
+<%     post_up.each do |post_up_cmd| -%>
+    post-up <%= post_up_cmd %>
+<%     end -%>
+<%   elsif post_up -%>
+    post-up <%= post_up %>
+<%   end -%>
+<%   if pre_down.is_a? Array -%>
+<%     pre_down.each do |pre_down_cmd| -%>
+    pre-down <%= pre_down_cmd %>
+<%     end -%>
+<%   elsif pre_down -%>
+    pre-down <%= pre_down %>
+<%   end -%>
+<%   if down.is_a? Array -%>
+<%     down.each do |down_cmd| -%>
+    down <%= down_cmd %>
+<%     end -%>
+<%   elsif down -%>
+    down <%= down %>
+<%   end -%>
+<%   if post_down.is_a? Array -%>
+<%     post_down.each do |post_down_cmd| -%>
+    post-down <%= post_down_cmd %>
+<%     end -%>
+<%   elsif post_down -%>
+    post-down <%= post_down %>
 <%   end -%>
 <% end -%>
