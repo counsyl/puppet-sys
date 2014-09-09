@@ -41,7 +41,10 @@ class sys::ssh::params {
         $lsb_compare = '7'
       }
 
-      if versioncmp($::lsbmajdistrelease, $lsb_compare) >= 0 {
+      # Facter 2.2+ changed lsbmajdistrelease fact, e.g., now returns
+      # '12.04' instead of '12' on Ubuntu precise.
+      $lsb_major_release = regsubst($::lsbmajdistrelease, '^(\d+).*', '\1')
+      if versioncmp($lsb_major_release, $lsb_compare) >= 0 {
         $ecdsa = true
       } else {
         $ecdsa = false
