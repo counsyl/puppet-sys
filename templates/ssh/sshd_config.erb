@@ -1,99 +1,105 @@
-<%# Use `sun_ssh` variable for quick Solaris checks. -%>
-<% sun_ssh = scope.lookupvar('::operatingsystem') == 'Solaris' -%>
+<%
+# Use `sun_ssh` variable for quick Solaris checks.
+sun_ssh = scope['::operatingsystem'] == 'Solaris'
+
+# If given an array for an argument, this returns a joined string.
+# Useful for options that can take arrays or strings.
+def option_str(arg, join=' ')
+  if arg.is_a?(Array)
+    arg.join(join)
+  else
+    arg
+  end
+end
+-%>
 # General configuration.
-<% if scope.lookupvar('sys::ssh::port').is_a? Array -%>
-<% scope.lookupvar('sys::ssh::port').each do |ssh_port| -%>
+<% if scope['sys::ssh::port'].is_a? Array -%>
+<%   scope['sys::ssh::port'].each do |ssh_port| -%>
 Port <%= ssh_port %>
-<% end -%>
+<%   end -%>
 <% else -%>
-Port <%= scope.lookupvar('sys::ssh::port') %>
+Port <%= scope['sys::ssh::port'] %>
 <% end -%>
-<% if scope.lookupvar('sys::ssh::listen_address').is_a? Array -%>
-<% scope.lookupvar('sys::ssh::listen_address').each do |ssh_listen_address| -%>
+<% if scope['sys::ssh::listen_address'].is_a? Array -%>
+<%   scope['sys::ssh::listen_address'].each do |ssh_listen_address| -%>
 ListenAddress <%= ssh_listen_address %>
-<% end -%>
-<% elsif scope.lookupvar('sys::ssh::listen_address').is_a? String -%>
-ListenAddress <%= scope.lookupvar('sys::ssh::listen_address') %>
+<%   end -%>
+<% elsif scope['sys::ssh::listen_address'].is_a? String -%>
+ListenAddress <%= scope['sys::ssh::listen_address'] %>
 <% end -%>
 <%# The SSH protocols allowed by the daemon, and determining if version 1 is allowed. -%>
-<% if scope.lookupvar('sys::ssh::protocol').is_a? Array -%>
-Protocol <%= scope.lookupvar('sys::ssh::protocol').join(',') %>
-<% ssh1 = scope.lookupvar('sys::ssh::protocol').include?('1') or scope.lookupvar('sys::ssh:protocol').include?(1) -%>
+<% if scope['sys::ssh::protocol'].is_a? Array -%>
+Protocol <%= scope['sys::ssh::protocol'].join(',') %>
+<% ssh1 = scope['sys::ssh::protocol'].include?('1') or scope['sys::ssh:protocol'].include?(1) -%>
 <% else -%>
-Protocol <%= scope.lookupvar('sys::ssh::protocol') %>
-<% ssh1 = scope.lookupvar('sys::ssh::protocol') == '1' or scope.lookupvar('sys::ssh:protocol') == 1 -%>
+Protocol <%= scope['sys::ssh::protocol'] %>
+<% ssh1 = Integer(scope['sys::ssh::protocol']) == 1 -%>
+<% end -%>
+<% if scope['sys::ssh::ciphers'] -%>
+Ciphers <%= option_str(scope['sys::ssh::ciphers'], ',') %>
+<% end -%>
+<% if scope['sys::ssh::macs'] -%>
+MACs <%= option_str(scope['sys::ssh::macs'], ',') %>
 <% end -%>
 
-# Host key locations.
+# Key locations.
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 <% if @ecdsa -%>
 HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
-<% if scope.lookupvar('sys::ssh::authorized_keys_file') -%>
-
-# Location of authorized keys.
-AuthorizedKeysFile <%= scope.lookupvar('sys::ssh::authorized_keys_file') %>
+<% if scope['sys::ssh::host_certificate'] -%>
+HostCertificate <%= scope['sys::ssh::host_certificate'] %>
 <% end -%>
-<% if scope.lookupvar('sys::ssh::ciphers').is_a? Array -%>
 
-Ciphers <%= scope.lookupvar('sys::ssh::ciphers').join(',') %>
+# Authorized keys.
+<% if scope['sys::ssh::authorized_keys_file'] -%>
+AuthorizedKeysFile option_str(<%= scope['sys::ssh::authorized_keys_file'] %>)
 <% end -%>
-<% if scope.lookupvar('sys::ssh::macs').is_a? Array -%>
-
-MACs <%= scope.lookupvar('sys::ssh::macs').join(',') %>
+<% if scope['sys::ssh::authorized_keys_command'] -%>
+AuthorizedKeysCommand <%= scope['sys::ssh::authorized_keys_command'] %>
+<%   if scope['sys::ssh::authorized_keys_command_user'] -%>
+AuthorizedKeysCommandUser <%= scope['sys::ssh::authorized_keys_command_user'] %>
+<%   end -%>
+<% end -%>
+<% if scope['sys::ssh::trusted_user_ca_keys'] -%>
+TrustedUserCAKeys <%= scope['sys::ssh::trusted_user_ca_keys'] %>
 <% end -%>
 
 # Privilege Separation setttings; enhances security if turned on.
 UsePrivilegeSeparation <%= @privilege_separation %>
 
 <%# If the `$denyusers` or `$allowusers` are defined, then set them up here. -%>
-<% if scope.lookupvar('sys::ssh::denyusers') -%>
+<% if scope['sys::ssh::denyusers'] -%>
 # Deny the following users SSH access
-<% if scope.lookupvar('sys::ssh::denyusers').is_a? Array -%>
-DenyUsers <%= scope.lookupvar('sys::ssh::denyusers').join(' ') %>
-<% elsif scope.lookupvar('sys::ssh::denyusers') != '' -%>
-DenyUsers <%= scope.lookupvar('sys::ssh::denyusers') %>
+DenyUsers <%= option_str(scope['sys::ssh::denyusers']) %>
 <% end -%>
-<% end -%>
-<% if scope.lookupvar('sys::ssh::allowusers') -%>
+<% if scope['sys::ssh::allowusers'] -%>
 # Only allow the following users SSH access
-<% if scope.lookupvar('sys::ssh::allowusers').is_a? Array -%>
-AllowUsers <%= scope.lookupvar('sys::ssh::allowusers').join(' ') %>
-<% elsif scope.lookupvar('sys::ssh::allowusers') != '' -%>
-AllowUsers <%= scope.lookupvar('sys::ssh::allowusers') %>
-<% end -%>
+AllowUsers <%= option_str(scope['sys::ssh::allowusers']) %>
 <% end -%>
 <%# If the `$denygroups` or `$allowgroups` are defined, then set them up here. -%>
-<% if scope.lookupvar('sys::ssh::denygroups') -%>
+<% if scope['sys::ssh::denygroups'] -%>
 # Deny the following groups SSH access
-<% if scope.lookupvar('sys::ssh::denygroups').is_a? Array -%>
-DenyGroups <%= scope.lookupvar('sys::ssh::denygroups').join(' ') %>
-<% elsif scope.lookupvar('sys::ssh::denygroups') != '' -%>
-DenyGroups <%= scope.lookupvar('sys::ssh::denygroups') %>
+DenyGroups <%= option_str(scope['sys::ssh::denygroups']) %>
 <% end -%>
-<% end -%>
-<% if scope.lookupvar('sys::ssh::allowgroups') -%>
+<% if scope['sys::ssh::allowgroups'] -%>
 # Only allow the following groups SSH access
-<% if scope.lookupvar('sys::ssh::allowgroups').is_a? Array -%>
-AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups').join(' ') %>
-<% elsif scope.lookupvar('sys::ssh::allowgroups') != '' -%>
-AllowGroups <%= scope.lookupvar('sys::ssh::allowgroups') %>
-<% end -%>
+AllowGroups <%= option_str(scope['sys::ssh::allowgroups']) %>
 <% end -%>
 
 # Logging
-SyslogFacility <%= scope.lookupvar('sys::ssh::syslog_facility') %>
-LogLevel <%= scope.lookupvar('sys::ssh::log_level') %>
+SyslogFacility <%= scope['sys::ssh::syslog_facility'] %>
+LogLevel <%= scope['sys::ssh::log_level'] %>
 
 # Authentication settings.
-LoginGraceTime <%= scope.lookupvar('sys::ssh::login_grace_time') %>
-PermitRootLogin <% if scope.lookupvar('sys::ssh::root_login') %>yes<% else %>no<% end %>
-StrictModes <% if scope.lookupvar('sys::ssh::strict_modes') %>yes<% else %>no<% end %>
+LoginGraceTime <%= scope['sys::ssh::login_grace_time'] %>
+PermitRootLogin <% if scope['sys::ssh::root_login'] %>yes<% else %>no<% end %>
+StrictModes <% if scope['sys::ssh::strict_modes'] %>yes<% else %>no<% end %>
 <% if ssh1 -%>
-RSAAuthentication <% if scope.lookupvar('sys::ssh::rsa_auth') %>yes<% else %>no<% end %>
+RSAAuthentication <% if scope['sys::ssh::rsa_auth'] %>yes<% else %>no<% end %>
 <% end -%>
-PubkeyAuthentication <% if scope.lookupvar('sys::ssh::pubkey_auth') %>yes<% else %>no<% end %>
+PubkeyAuthentication <% if scope['sys::ssh::pubkey_auth'] %>yes<% else %>no<% end %>
 
 # Rhosts configuration.
 IgnoreRhosts yes
@@ -104,38 +110,38 @@ RhostsRSAAuthentication no
 # similar for protocol version 2
 HostbasedAuthentication no
 
-UseDNS <% if scope.lookupvar('sys::ssh::use_dns') %>yes<% else %>no<% end %>
+UseDNS <% if scope['sys::ssh::use_dns'] %>yes<% else %>no<% end %>
 
 # If passwords aren't allowed, must use key-based authentication.
-PermitEmptyPasswords <% if scope.lookupvar('sys::ssh::empty_passwords') %>yes<% else %>no<% end %>
-ChallengeResponseAuthentication <% if scope.lookupvar('sys::ssh::challenge_response') %>yes<% else %>no<% end %>
-PasswordAuthentication <% if scope.lookupvar('sys::ssh::password_auth') %>yes<% else %>no<% end %>
+PermitEmptyPasswords <% if scope['sys::ssh::empty_passwords'] %>yes<% else %>no<% end %>
+ChallengeResponseAuthentication <% if scope['sys::ssh::challenge_response'] %>yes<% else %>no<% end %>
+PasswordAuthentication <% if scope['sys::ssh::password_auth'] %>yes<% else %>no<% end %>
 <% if sun_ssh -%>
-KbdInteractiveAuthentication <% if scope.lookupvar('sys::ssh::password_auth') %>yes<% else %>no<% end %>
+KbdInteractiveAuthentication <% if scope['sys::ssh::password_auth'] %>yes<% else %>no<% end %>
 <% end -%>
 <% if @use_pam -%>
 UsePAM yes
 <% end -%>
 
 # Forwarding settings
-AllowTcpForwarding <% if scope.lookupvar('sys::ssh::tcp_forwarding') %>yes<% else %>no<% end %>
-X11Forwarding <% if scope.lookupvar('sys::ssh::x11_forwarding') %>yes<% else %>no<% end %>
-<% if scope.lookupvar('::operatingsystem') != 'Solaris' -%>
-AllowAgentForwarding <% if scope.lookupvar('sys::ssh::agent_forwarding') %>yes<% else %>no<% end %>
+AllowTcpForwarding <% if scope['sys::ssh::tcp_forwarding'] %>yes<% else %>no<% end %>
+X11Forwarding <% if scope['sys::ssh::x11_forwarding'] %>yes<% else %>no<% end %>
+<% if scope['::operatingsystem'] != 'Solaris' -%>
+AllowAgentForwarding <% if scope['sys::ssh::agent_forwarding'] %>yes<% else %>no<% end %>
 <% end -%>
 
 PrintMotd <% if @use_pam or sun_ssh %>no<% else %>yes<% end %>
 PrintLastLog yes
 <% if not sun_ssh then %>
-TCPKeepAlive <% if scope.lookupvar('sys::ssh::tcp_keepalive') %>yes<% else %>no<% end %>
+TCPKeepAlive <% if scope['sys::ssh::tcp_keepalive'] %>yes<% else %>no<% end %>
 
 # Accepted environment variables from the client.
-AcceptEnv <%= scope.lookupvar('sys::ssh::acceptenv').join(' ') %>
+AcceptEnv <%= scope['sys::ssh::acceptenv'].join(' ') %>
 <% else -%>
 <%# KeepAlive (not TCPKeepalive) is the setting on Sun SSH -%>
-KeepAlive <% if scope.lookupvar('sys::ssh::tcp_keepalive') %>yes<% else %>no<% end %>
+KeepAlive <% if scope['sys::ssh::tcp_keepalive'] %>yes<% else %>no<% end %>
 <% end -%>
-<% if scope.lookupvar('sys::ssh::sftp') -%>
+<% if scope['sys::ssh::sftp'] -%>
 
 Subsystem sftp <%= @sftp_subsystem %>
 <% end -%>
