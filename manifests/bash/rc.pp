@@ -73,7 +73,8 @@ define sys::bash::rc(
     $homedir = $home
   } else {
     if $name == 'root' {
-      $homedir = '/root'
+      include sys
+      $homedir = $sys::root_home
     } else {
       $homedir = "/home/${name}"
     }
@@ -103,7 +104,7 @@ define sys::bash::rc(
     require => File["${homedir}/.bashrc"],
   }
 
-  if $::operatingsystem == Solaris {
+  if $::operatingsystem == 'Solaris' {
     file { "${homedir}/.zfs_completion":
       ensure => $file_ensure,
       mode   => '0600',
