@@ -35,10 +35,10 @@ Protocol <%= scope['sys::ssh::protocol'].join(',') %>
 Protocol <%= scope['sys::ssh::protocol'] %>
 <% ssh1 = Integer(scope['sys::ssh::protocol']) == 1 -%>
 <% end -%>
-<% if scope['sys::ssh::ciphers'] -%>
+<% if scope['sys::ssh::ciphers'].count > 0 -%>
 Ciphers <%= option_str(scope['sys::ssh::ciphers'], ',') %>
 <% end -%>
-<% if scope['sys::ssh::macs'] -%>
+<% if scope['sys::ssh::macs'].count > 0 -%>
 MACs <%= option_str(scope['sys::ssh::macs'], ',') %>
 <% end -%>
 
@@ -52,9 +52,8 @@ HostKey /etc/ssh/ssh_host_ecdsa_key
 HostCertificate <%= scope['sys::ssh::host_certificate'] %>
 <% end -%>
 
-# Authorized keys.
 <% if scope['sys::ssh::authorized_keys_file'] -%>
-AuthorizedKeysFile option_str(<%= scope['sys::ssh::authorized_keys_file'] %>)
+AuthorizedKeysFile <%= option_str(scope['sys::ssh::authorized_keys_file']) %>
 <% end -%>
 <% if scope['sys::ssh::authorized_keys_command'] -%>
 AuthorizedKeysCommand <%= scope['sys::ssh::authorized_keys_command'] %>
@@ -106,8 +105,6 @@ IgnoreRhosts yes
 <% if ssh1 -%>
 RhostsRSAAuthentication no
 <% end -%>
-
-# similar for protocol version 2
 HostbasedAuthentication no
 
 UseDNS <% if scope['sys::ssh::use_dns'] %>yes<% else %>no<% end %>
@@ -126,7 +123,7 @@ UsePAM yes
 # Forwarding settings
 AllowTcpForwarding <% if scope['sys::ssh::tcp_forwarding'] %>yes<% else %>no<% end %>
 X11Forwarding <% if scope['sys::ssh::x11_forwarding'] %>yes<% else %>no<% end %>
-<% if scope['::operatingsystem'] != 'Solaris' -%>
+<% if not sun_ssh -%>
 AllowAgentForwarding <% if scope['sys::ssh::agent_forwarding'] %>yes<% else %>no<% end %>
 <% end -%>
 
