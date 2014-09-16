@@ -16,21 +16,38 @@
 #  will be copied into the client session's environment (on non-Solaris
 #  systems).  Defaults to `[ 'LANG', 'LC_*' ]`.
 #
+# [*authorized_keys_command*]
+#  Specifies a program to be used to look up the user's public keys;
+#  maps to the AuthorizedKeysCommand sshd_config variable (requires
+#  OpenSSH 6.2+).
+#
+# [*authorized_keys_command_user*]
+#  Specifies the user to run the `authorized_keys_command` (if specified).
+#
+# [*authorized_keys_file*]
+#  A string, or an array of strings, used to specify the file(s) that can
+#  be used for user authentication.
+#
+# [*authorized_principals_file*]
+#  Specifies a file that lists principal names that are accepted for
+#  certificate authentication; maps to the AuthorizedPrincipalsFile
+#  sshd_config variable. Defaults to false.
+#
 # [*allowusers*]
 #  An array of users allowed SSH access; maps to the AllowUsers
-#  `sshd_config` variable.  Defaults to false.
+#  sshd_config variable.  Defaults to false.
 #
 # [*allowgroups*]
 #  An array of groups allowed SSH access; maps to the AllowGroups
-#  `sshd_config` variable.  Defaults to false.
+#  sshd_config variable.  Defaults to false.
 #
 # [*denyusers*]
 #  An array of users denied SSH access; maps to the DenyUsers
-#  `sshd_config` variable.  Defaults to false.
+#  sshd_config variable.  Defaults to false.
 #
 # [*denygroups*]
 #  An array of groups denied SSH access; maps to the DenyGroups
-#  `sshd_config` variable.  Defaults to false.
+#  sshd_config variable.  Defaults to false.
 #
 # [*challenge_response*]
 #  Specifies whether challenge-response authentication is allowed,
@@ -38,7 +55,7 @@
 #
 # [*ciphers*]
 #  Specifies the ciphers allowed for protocol version 2, must be
-#  given as an array.  Default is undefined.
+#  given as an array.  Default is [].
 #
 # [*empty_passwords*]
 #  Whether or not to allow empty passwords, defaults to false.
@@ -52,7 +69,7 @@
 #
 # [*macs*]
 #  Specifies the available MAC (message authentication code) algorithms,
-#  must be given as an array.  Default is undefined.
+#  must be given as an array.  Default is [].
 #
 # [*root_login*]
 #  Determines whether root logins are permitted, defaults to false.
@@ -96,6 +113,11 @@
 #  Determines whether TCP "keepalive" packets are sent to clients, defaults
 #  to true.
 #
+# [*trusted_user_ca_keys*]
+#  Specifies a file containing public keys of trusted CAs that are allowed
+#  to sign user certificates for authentication (the TrustedUserCAKeys
+#  sshd_config setting).
+#
 # [*use_dns*]
 #  Whether or not the SSH daemon should perform name lookups on the remote
 #  host and that it maps back, defaults to true.
@@ -104,34 +126,38 @@
 #  Allows X11 forwarding by the SSH daemon, defaults to false.
 #
 class sys::ssh(
-  $port                 = 22,
-  $listen_address       = undef,
-  $acceptenv            = [ 'LANG', 'LC_*' ],
-  $allowusers           = false,
-  $allowgroups          = false,
-  $authorized_keys_file = false,
-  $denyusers            = false,
-  $denygroups           = false,
-  $challenge_response   = false,
-  $ciphers              = undef,
-  $empty_passwords      = false,
-  $login_grace_time     = 120,
-  $log_level            = 'INFO',
-  $macs                 = undef,
-  $root_login           = false,
-  $rsa_auth             = true,
-  $pubkey_auth          = true,
-  $password_auth        = false,
-  $privilege_separation = true,
-  $protocol             = 2,
-  $sftp                 = true,
-  $strict_modes         = true,
-  $syslog_facility      = 'AUTH',
-  $agent_forwarding     = false,
-  $tcp_forwarding       = false,
-  $tcp_keepalive        = true,
-  $use_dns              = true,
-  $x11_forwarding       = false,
+  $port                         = 22,
+  $listen_address               = undef,
+  $acceptenv                    = [ 'LANG', 'LC_*' ],
+  $allowusers                   = false,
+  $allowgroups                  = false,
+  $authorized_keys_command      = false,
+  $authorized_keys_command_user = false,
+  $authorized_keys_file         = false,
+  $authorized_principals_file   = false,
+  $denyusers                    = false,
+  $denygroups                   = false,
+  $challenge_response           = false,
+  $ciphers                      = [],
+  $empty_passwords              = false,
+  $login_grace_time             = 120,
+  $log_level                    = 'INFO',
+  $macs                         = [],
+  $root_login                   = false,
+  $rsa_auth                     = true,
+  $pubkey_auth                  = true,
+  $password_auth                = false,
+  $privilege_separation         = true,
+  $protocol                     = 2,
+  $sftp                         = true,
+  $strict_modes                 = true,
+  $syslog_facility              = 'AUTH',
+  $agent_forwarding             = false,
+  $tcp_forwarding               = false,
+  $tcp_keepalive                = true,
+  $trusted_user_ca_keys         = false,
+  $use_dns                      = true,
+  $x11_forwarding               = false,
 ){
   anchor { 'sys::ssh::start': }  ->
   class { 'sys::ssh::install': } ->
