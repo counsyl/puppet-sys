@@ -1,0 +1,12 @@
+startup_message off
+vbell off
+
+# Do not use xterms alternate window buffer. 
+# This turns on scrolling
+termcapinfo xterm* ti@:te@
+
+hardstatus lastline '%c:%s  %w'
+defscrollback 5000
+<% if @extra -%>
+<%= @extra %>
+<% end -%>
