@@ -1,6 +1,6 @@
 {
   "name": "counsyl-sys",
-  "version": "0.9.15",
+  "version": "0.9.16",
   "author": "Counsyl, Inc.",
   "summary": "Common platform packages, resources and modules",
   "license": "Apache License, Version 2.0",
