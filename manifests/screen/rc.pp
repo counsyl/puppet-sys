@@ -54,13 +54,14 @@ define sys::screen::rc(
     $homedir = $home
   } else {
     if $name == 'root' {
-      $homedir = '/root'
+      include sys
+      $homedir = $sys::root_home
     } else {
       $homedir = "/home/${name}"
     }
   }
 
-  # The template for the bash resource file; uses the following
+  # The template for the screen resource file; uses the following
   # variables from this scope:
   # * $extra
   file { "${homedir}/.screenrc":
