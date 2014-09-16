@@ -1,0 +1,14 @@
+{
+  "name": "counsyl-sys",
+  "version": "0.9.15",
+  "author": "Counsyl, Inc.",
+  "summary": "Common platform packages, resources and modules",
+  "license": "Apache License, Version 2.0",
+  "source": "git://github.com/counsyl/puppet-sys.git",
+  "project_page": "https://github.com/counsyl/puppet-sys",
+  "issues_url": "https://github.com/counsyl/puppet-sys/issues",
+  "description": "Common platform packages, resources and modules",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.1.0"}
+  ]
+}
