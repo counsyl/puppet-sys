@@ -10,7 +10,7 @@
 #
 # [*package*]
 #  The name of the package to install; the default depends on the OS, most
-#  likely it is 'systat' or false if it's built-in to the OS.
+#  likely it is 'sysstat' or false if it's built-in to the OS.
 #
 class sys::stat(
   $ensure  = 'installed',
