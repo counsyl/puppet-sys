@@ -10,10 +10,24 @@ class sys::openbsd::params {
   # strings that we need to use for `ensure`.  Also used to specify what
   # version Puppet and Facter are packaged for the kernel version.
   case $::kernelmajversion {
+    '5.6': {
+      $emacs  = '24.3p4'
+      $python = '2.7.8p0'
+      $ruby   = '2.0.0.481'
+      $puppet = '3.6.2p3'
+      $facter = '2.1.0p1'
+    }
+    '5.5': {
+      $emacs  = '24.3p4'
+      $python = '2.7.6p0'
+      $ruby   = '1.9.3.448p0'
+      $puppet = '3.4.2'
+      $facter = '1.7.4p0'
+    }
     '5.4': {
-      $emacs = '24.3'
+      $emacs  = '24.3'
       $python = '2.7.5'
-      $ruby = '1.9.3.448'
+      $ruby   = '1.9.3.448'
       $puppet = '3.2.3'
       $facter = '1.7.2'
     }
