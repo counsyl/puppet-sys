@@ -15,11 +15,18 @@ class sys::ssh::params {
       $service = false
       $sftp_subsystem = '/usr/libexec/sftp-server'
       $use_pam = false
+
       if versioncmp($::kernalmajversion, '5.0') >= 0 {
         $ecdsa = true
         $sandbox = true
       } else {
         $ecdsa = false
+      }
+
+      if versioncmp($::kernelmajversion, '5.5') >= 0 {
+        $ed25519 = true
+      } else {
+        $ed25519 = false
       }
     }
     solaris: {
