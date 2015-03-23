@@ -5,10 +5,13 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#  The ensure value for the resource, defaults to 'present'.
+#
 # [*ip*]
 #  The IP address to assign to the interface.  Required, unless the
-#  interface is for PF logging (in other words, the interface name
-#  starts with 'pflog').
+#  interface is for PF logging or synchronization (in other words, the
+#  interface name starts with 'pflog' or 'pfsync').
 #
 # [*addr_family*]
 #  The address family to use for the interface, defaults to 'inet' (IPv4).
@@ -20,18 +23,24 @@
 # [*broadcast*]
 #  The broadcast address for the interface, defaults to undef.
 #
-# [*netmask*]
-#  The network mask for the interface, defaults to '255.255.255.0'.
-#
-# [*owner*]
-#  The owner of the interface file ("/etc/hostname.${name}"), defaults
-#  to 'root'.
+# [*file*]
+#  The location of the interface file, defaults to "/etc/hostname.${title}".
+#  Note: changing the location or file permissions/owner is only for
+#  testing purposes -- OpenBSD will not recognize an interface that's
+#  not put in the default location.
 #
 # [*group*]
 #  The group of the interface file, defaults to 'wheel'.
 #
 # [*mode*]
 #  The mode of the interface file, defaults to '0640'.
+#
+# [*netmask*]
+#  The network mask for the interface, defaults to '255.255.255.0'.
+#
+# [*owner*]
+#  The owner of the interface file ("/etc/hostname.${title}"), defaults
+#  to 'root'.
 #
 # [*template*]
 #  The template to use to generate the interface file, defaults to
@@ -41,28 +50,55 @@
 #
 # Here's how to create a DHCP interface for em0:
 #
-#     sys::openbsd::interface { 'em0':
-#         ip => 'dhcp',
-#     }
+#   sys::openbsd::interface { 'em0':
+#     ip => 'dhcp',
+#   }
+#
+# Or, creating a pfsync0 interface using the em1 device:
+#
+#  sys::openbsd::interface { 'pfsync0':
+#    syncdev => 'em1',
+#  }
+#
 define sys::openbsd::interface(
-  $ip='',
-  $addr_family='inet',
-  $aliases=undef,
-  $broadcast=undef,
-  $netmask='255.255.255.0',
-  $owner='root',
-  $group='wheel',
-  $mode='0640',
-  $template='sys/openbsd/interface.erb',
-  ) {
+  $ensure      = 'present',
+  $ip          = undef,
+  $addr_family = 'inet',
+  $aliases     = [],
+  $broadcast   = false,
+  $file        = "/etc/hostname.${title}",
+  $group       = 'wheel',
+  $mode        = '0640',
+  $netmask     = '255.255.255.0',
+  $options     = false,
+  $owner       = 'root',
+  $syncdev     = false,
+  $template    = 'sys/openbsd/interface.erb',
+) {
 
-  # Fail if an IP address isn't provided for a non pflog interface.
-  if ($ip == '' and $name !~ /^pflog/) {
-    fail('Must provide an IP address.\n')
+  if $title =~ /^pfsync\d+$/ {
+    validate_string($syncdev)
+  } else {
+    # Fail if an IP address isn't provided for an interface that doesn't
+    # use DHCP or is for PF logging.
+    if ($title !~ /^pflog\d+$/ and $ip != 'dhcp' and ! is_ip_address($ip)){
+      fail('Invalid IP address.')
+    }
   }
 
-  file { "/etc/hostname.${name}":
-    ensure  => file,
+  validate_re($addr_family, '^inet6?$')
+  validate_re($ensure, '^(present|absent)$')
+  validate_array($aliases)
+  validate_string($netmask)
+
+  if $ensure == 'present' {
+    $file_ensure = 'file'
+  } else {
+    $file_ensure = 'absent'
+  }
+
+  file { $file:
+    ensure  => $file_ensure,
     owner   => $owner,
     group   => $group,
     mode    => $mode,
