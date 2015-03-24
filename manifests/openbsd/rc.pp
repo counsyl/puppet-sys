@@ -53,13 +53,13 @@
 #
 define sys::openbsd::rc(
   $settings,
-  $ensure="file",
-  $owner='root',
-  $group='wheel',
-  $mode='0644',
-  $template="sys/openbsd/rc.conf.erb",
-  ) {
-  file { $name:
+  $ensure    = 'file',
+  $owner     = 'root',
+  $group     = 'wheel',
+  $mode      = '0644',
+  $template  = 'sys/openbsd/rc.conf.erb',
+) {
+  file { $title:
     ensure  => $ensure,
     owner   => $owner,
     group   => $group,
