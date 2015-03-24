@@ -16,7 +16,7 @@ class sys::ssh::params {
       $sftp_subsystem = '/usr/libexec/sftp-server'
       $use_pam = false
 
-      if versioncmp($::kernalmajversion, '5.0') >= 0 {
+      if versioncmp($::kernelmajversion, '5.0') >= 0 {
         $ecdsa = true
         $sandbox = true
       } else {
