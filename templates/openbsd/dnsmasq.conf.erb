@@ -31,7 +31,7 @@ expand-hosts
 <% end -%>
 cache-size=<%= @cache_size %>
 no-resolv
-<% @forwarders.each do |forwarder| -%>
+<% @forwarders.each do | forwarder | -%>
 server=<%= forwarder %>
 <% end -%>
 
