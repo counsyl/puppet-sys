@@ -15,11 +15,18 @@ class sys::ssh::params {
       $service = false
       $sftp_subsystem = '/usr/libexec/sftp-server'
       $use_pam = false
-      if versioncmp($::kernalmajversion, '5.0') >= 0 {
+
+      if versioncmp($::kernelmajversion, '5.0') >= 0 {
         $ecdsa = true
         $sandbox = true
       } else {
         $ecdsa = false
+      }
+
+      if versioncmp($::kernelmajversion, '5.5') >= 0 {
+        $ed25519 = true
+      } else {
+        $ed25519 = false
       }
     }
     solaris: {
@@ -33,6 +40,7 @@ class sys::ssh::params {
       $sftp_subsystem = 'internal-sftp'
       $use_pam = false
       $ecdsa = false
+      $ed25519 = false
     }
     debian: {
       if $::operatingsystem == 'Ubuntu' {
@@ -49,6 +57,7 @@ class sys::ssh::params {
       } else {
         $ecdsa = false
       }
+      $ed25519 = false
 
       $client = 'openssh-client'
       $server = 'openssh-server'
@@ -64,6 +73,7 @@ class sys::ssh::params {
       $sftp_subsystem = '/usr/libexec/openssh/sftp-server'
       $use_pam = true
       $ecdsa = false
+      $ed25519 = false
     }
     default: {
       fail("The SSH module is not supported on ${::osfamily}.\n")

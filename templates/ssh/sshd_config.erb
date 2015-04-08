@@ -48,6 +48,9 @@ HostKey /etc/ssh/ssh_host_dsa_key
 <% if @ecdsa -%>
 HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
+<% if @ed25519 -%>
+HostKey /etc/ssh/ssh_host_ed25519_key
+<% end -%>
 <% if scope['sys::ssh::host_certificate'] -%>
 HostCertificate <%= scope['sys::ssh::host_certificate'] %>
 <% end -%>
