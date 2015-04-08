@@ -5,7 +5,7 @@
 define sys::redhat::selinux(
   $config      = '/etc/selinux/config',
   $selinuxtype = 'targeted',
-  $template    = 'sys/redhat/selinux.erb',
+  $template    = 'sys/redhat/selinux-config.erb',
 ) {
   $allowed_enforce = ['enabled', 'disabled', 'permissive']
   $allowed_types = ['targeted', 'mls']
