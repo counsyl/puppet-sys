@@ -1,0 +1,20 @@
+# /dev/r<%= @device %>c:
+type: SCSI
+disk: SCSI disk
+label: Virtual disk    
+duid: 0000000000000000
+flags:
+bytes/sector: <%= @bytes_sector %>
+sectors/track: <%= @sectors_track %>
+tracks/cylinder: <%= @tracks_cylinder %>
+sectors/cylinder: <%= @sectors_cylinder %>
+cylinders: <%= @cylinders %>
+total sectors: <%= @sectors %>
+boundstart: 0
+boundend: <%= @sectors %>
+drivedata: 0 
+
+16 partitions:
+#                size           offset  fstype [fsize bsize  cpg]
+  a:<%= @sectors_string %>                0  4.2BSD   2048 16384    1
+  c:<%= @sectors_string %>                0  unused                  

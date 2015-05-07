@@ -9,6 +9,6 @@
   "issues_url": "https://github.com/counsyl/puppet-sys/issues",
   "description": "Common platform packages, resources and modules",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.1.0"}
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0"}
   ]
 }
