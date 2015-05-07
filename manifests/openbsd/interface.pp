@@ -29,6 +29,13 @@
 #  testing purposes -- OpenBSD will not recognize an interface that's
 #  not put in the default location.
 #
+# [*flowdst*]
+#  The destination IP (and port) for pflow data, defaults to false.
+#  Required for pflow devices.
+#
+# [*flowsrc*]
+#  The source IP of pflow data, defaults to false.  Required for pflow devices.
+#
 # [*group*]
 #  The group of the interface file, defaults to 'wheel'.
 #
@@ -37,6 +44,10 @@
 #
 # [*netmask*]
 #  The network mask for the interface, defaults to '255.255.255.0'.
+#
+# [*pflowproto*]
+#  The protocol used for pflow devices, defaults to 10.  Set to false to omit
+#  from a pflow interface definition.
 #
 # [*owner*]
 #  The owner of the interface file ("/etc/hostname.${title}"), defaults
@@ -60,6 +71,13 @@
 #    syncdev => 'em1',
 #  }
 #
+# Here's how to create a pflow device, exporting to `10.0.0.8:9995`:
+#
+#  sys::openbsd::interface { 'pflow0':
+#    flowdst => '10.0.0.8:9995',
+#    flowsrc => '10.0.0.1',
+#  }
+#
 define sys::openbsd::interface(
   $ensure      = 'present',
   $ip          = undef,
@@ -67,17 +85,23 @@ define sys::openbsd::interface(
   $aliases     = [],
   $broadcast   = false,
   $file        = "/etc/hostname.${title}",
+  $flowdst     = false,
+  $flowsrc     = false,
   $group       = 'wheel',
   $mode        = '0640',
   $netmask     = '255.255.255.0',
   $options     = false,
   $owner       = 'root',
+  $pflowproto  = 10,
   $syncdev     = false,
   $template    = 'sys/openbsd/interface.erb',
 ) {
 
   if $title =~ /^pfsync\d+$/ {
     validate_string($syncdev)
+  } elsif $title =~ /^pflow\d+$/ {
+    validate_string($flowdst)
+    validate_string($flowsrc)
   } else {
     # Fail if an IP address isn't provided for an interface that doesn't
     # use DHCP or is for PF logging.

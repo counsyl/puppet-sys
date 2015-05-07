@@ -1,7 +1,9 @@
-<% if @name.start_with?('pflog') -%>
+<% if @title.start_with?('pflog') -%>
 <%# If this is a pflog interface, simply put 'up' in here (no newline after). -%>
-up<% elsif @name.start_with?('pfsync') -%>
+up<% elsif @title.start_with?('pfsync') -%>
 up syncdev <%= @syncdev %>
+<% elsif @title.start_with?('pflow') -%>
+flowsrc <%= @flowsrc %> flowdst <%= @flowdst %><% if @pflowproto %> pflowproto <%= @pflowproto %><% end %><% if @options %> <%= @options %><% end %>
 <% elsif @ip.start_with?('dhcp') -%>
 dhcp<% if @options %> <%= @options %><% end %>
 <% else -%>
