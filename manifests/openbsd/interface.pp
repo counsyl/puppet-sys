@@ -46,8 +46,8 @@
 #  The network mask for the interface, defaults to '255.255.255.0'.
 #
 # [*pflowproto*]
-#  The protocol used for pflow devices, defaults to 10.  Set to false to omit
-#  from a pflow interface definition.
+#  The protocol used for pflow devices, defaults to false.  Set to version
+#  you want, e.g., setting to 10 uses IPFIX.
 #
 # [*owner*]
 #  The owner of the interface file ("/etc/hostname.${title}"), defaults
@@ -92,7 +92,7 @@ define sys::openbsd::interface(
   $netmask     = '255.255.255.0',
   $options     = false,
   $owner       = 'root',
-  $pflowproto  = 10,
+  $pflowproto  = false,
   $syncdev     = false,
   $template    = 'sys/openbsd/interface.erb',
 ) {
