@@ -12,7 +12,6 @@ class sys::ssh::params {
       # Installed by default on OpenBSD
       $client = false
       $server = false
-      $service = false
       $sftp_subsystem = '/usr/libexec/sftp-server'
       $use_pam = false
 
@@ -27,6 +26,12 @@ class sys::ssh::params {
         $ed25519 = true
       } else {
         $ed25519 = false
+      }
+
+      if versioncmp($::kernelmajversion, '5.7') >= 0 {
+        $service = 'sshd'
+      } else {
+        $service = false
       }
     }
     solaris: {

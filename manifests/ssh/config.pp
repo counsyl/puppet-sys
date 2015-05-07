@@ -3,7 +3,6 @@
 # Creates the SSH daemon and client configuration files.
 #
 class sys::ssh::config(
-  $ssh_config    = $sys::ssh::params::ssh_config,
   $sshd_config   = $sys::ssh::params::sshd_config,
   $sshd_template = 'sys/ssh/sshd_config.erb',
   $mode          = '0600',
@@ -28,7 +27,6 @@ class sys::ssh::config(
     owner   => 'root',
     group   => $sys::root_group,
     mode    => $mode,
-    alias   => 'sshd_config',
     content => template($sshd_template),
     notify  => Class['ssh::service'],
     require => Class['ssh::install'],
