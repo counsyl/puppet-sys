@@ -2,17 +2,24 @@
 # the solaris user (specified by the name of the define).
 #
 # == Parameters
+#
 # [*winname*]
 #  The windows name to map the unix account to.
+#
 # [*group*]
 #  Indicates that the windows name is a group (and will be
 #  mapped to a unix group with same name as this resource).
+#
 # [*unixname*]
 #  Defaults to the same as `$name`, option used for overridding the
 #  UNIX mapping name when it should be different from $name.
 #
-define sys::solaris::idmap($winname, $group=false, $unixname=undef) {
-  require sys::solaris::cifs
+define sys::solaris::idmap(
+  $winname,
+  $group    = false,
+  $unixname = undef,
+) {
+  include sys::solaris::cifs
 
   # If the unix name parameter is provided, then use that as the
   # name of the UNIX user/group rather than $name.

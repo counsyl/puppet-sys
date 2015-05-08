@@ -5,7 +5,7 @@
 class sys::redhat::build_essential {
   include sys::gcc
   include sys::perl
-  
+
   package { 'kernel-devel':
     ensure  => installed,
     require => Class['sys::gcc'],

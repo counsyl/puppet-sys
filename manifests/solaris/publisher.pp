@@ -1,11 +1,12 @@
 define sys::solaris::publisher(
   $uri,
-  $ensure='present',
-  $preferred=false,
-  $origin=true,
-  $nonsticky=false,
-  $sticky=false) {
-  
+  $ensure    = 'present',
+  $preferred = false,
+  $origin    = true,
+  $nonsticky = false,
+  $sticky    = false,
+) {
+
   case $ensure {
     'present': {
       # Constructing options for the `pkg set-publisher` command.
@@ -30,7 +31,7 @@ define sys::solaris::publisher(
       }
 
       $pkg_opts = "${sticky_opt}${preferred_opt}${origin_opt}${uri}"
-      
+
       exec { "pkg set-publisher ${name}":
         command => "pkg set-publisher ${pkg_opts} ${name}",
         path    => ['/bin', '/usr/bin'],
@@ -48,7 +49,7 @@ define sys::solaris::publisher(
           before +> $before,
         }
       }
-      
+
     }
     'absent': {
       exec { "pkg unset-publisher ${name}":
@@ -68,7 +69,7 @@ define sys::solaris::publisher(
           before +> $before,
         }
       }
-      
+
     }
     default: {
       fail("Incorrect ensure value of '${ensure}'.\n")

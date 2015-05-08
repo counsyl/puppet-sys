@@ -24,9 +24,9 @@ define sys::solaris::pkg_server(
   $inst_root,
   $port,
   $proxy_base,
-  $address="127.0.0.1",
-  $fmri='pkg/server'
-  ){
+  $address     = '127.0.0.1',
+  $fmri        = 'pkg/server'
+){
   $service = "pkg/server:${name}"
   $config = "/root/pkg5-${name}"
 
@@ -39,9 +39,9 @@ define sys::solaris::pkg_server(
   }
 
   Exec {
-    path => "/usr/sbin"
+    path => '/usr/sbin'
   }
-  
+
   exec { "create-${service}":
     command     => "svccfg -s ${fmri} -f ${config}",
     subscribe   => File[$config],
