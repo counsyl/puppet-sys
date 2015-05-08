@@ -19,6 +19,9 @@
           "operatingsystem": "Darwin"
       },
       {
+          "operatingsystem": "Debian"
+      },
+      {
           "operatingsystem": "OpenBSD"
       },
       {
