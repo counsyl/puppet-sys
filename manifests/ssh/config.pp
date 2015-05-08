@@ -19,7 +19,7 @@ class sys::ssh::config(
       $privilege_separation = 'yes'
     }
   } else {
-     $privilege_separation = 'no'
+    $privilege_separation = 'no'
   }
 
   file { $sshd_config:

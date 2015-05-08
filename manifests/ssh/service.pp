@@ -17,8 +17,8 @@ class sys::ssh::service(
   } elsif $::operatingsystem == 'OpenBSD' {
     # Use this to restart SSH on OpenBSD systems prior to 5.7,
     # which did not have `rcctl`.
-    exec { "openbsd-restart-sshd":
-      command     => "/etc/rc.d/sshd restart",
+    exec { 'openbsd-restart-sshd':
+      command     => '/etc/rc.d/sshd restart',
       refreshonly => true,
       subscribe   => File[$sshd_config],
     }

@@ -10,15 +10,15 @@ class sys::ssh::install(
 ) inherits sys::ssh::params {
   if $client {
     package { $client:
-      ensure    => $ensure,
-      provider  => $provider,
+      ensure   => $ensure,
+      provider => $provider,
     }
   }
 
   if $server {
     package { $server:
-      ensure    => $ensure,
-      provider  => $provider,
+      ensure   => $ensure,
+      provider => $provider,
     }
   }
 }

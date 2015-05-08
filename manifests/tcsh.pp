@@ -8,7 +8,7 @@ class sys::tcsh (
   $source   = $tcsh::params::source,
   $provider = $tcsh::params::provider,
 ) inherits sys::tcsh::params {
-  if $package { 
+  if $package {
     package { $package:
       ensure   => $ensure,
       source   => $source,
