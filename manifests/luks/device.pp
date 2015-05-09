@@ -7,7 +7,7 @@
 # Warning: The secret key may still be cached by Puppet in the compiled catalog
 #  (/var/lib/puppet/client_data/catalog/*.json)  To prevent this secret from
 #  persisting on disk you will have still have delete this file via some
-#  mechanisim, e.g., through a cron task or configuring the Puppet agent to
+#  mechanism, e.g., through a cron task or configuring the Puppet agent to
 #  run a `postrun_command`, see:
 #
 #  http://docs.puppetlabs.com/references/stable/configuration.html#postruncommand
