@@ -1,3 +1,9 @@
+## 0.9.19 (unreleased)
+
+IMPROVEMENTS
+
+* `sys::inifile` improvements (GH-6).
+
 ## 0.9.18 (05/08/2015)
 
 FEATURES:
