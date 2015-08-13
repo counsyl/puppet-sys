@@ -1,12 +1,18 @@
 # == Define: sys::apt::sources
 #
-# Sets up a `sources.list` file for apt repositories.
+# Sets up a `sources.list` file (the title of this resource) for apt
+# repositories.
 #
 # === Parameters
 #
+# [*ensure*]
+#  Ensure value for this resource, defaults to 'present'.  Set to 'absent'
+#  to remove the sources list.
+#
 # [*repositories*]
-#  Required.  List of hashes that specify the repository options.  Each
-#  hash must have a 'uri', 'distribution', and 'components' keys.
+#  Array of hashes that specify the repository options.  Each
+#  hash must have a 'uri', 'distribution', and 'components' keys, defaults
+#  to [].
 #
 # [*source*]
 #  Whether to include source ('deb-src') repositories.  Defaults to true.
@@ -35,14 +41,31 @@
 #   deb http://us.archive.ubuntu.com/ubuntu/ precise main restricted
 #
 define sys::apt::sources(
-  $repositories,
-  $source        = true,
-  $template      = 'sys/apt/sources.list.erb'
+  $ensure       = 'present',
+  $repositories = [],
+  $source       = true,
+  $template     = 'sys/apt/sources.list.erb'
 ){
-  # The name of the resource should be the path to the apt
+  validate_absolute_path($title)
+  validate_array($repositories)
+  validate_bool($source)
+
+  case $ensure {
+    'present': {
+      $file_ensure = 'file'
+    }
+    'absent': {
+      $file_ensure = 'absent'
+    }
+    default: {
+      fail('Invalid sys::apt::sources ensure value.')
+    }
+  }
+
+  # The title of the resource should be the path to the apt
   # sources list, e.g., '/etc/apt/sources.list'.
-  file { $name:
-    ensure  => file,
+  file { $title:
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

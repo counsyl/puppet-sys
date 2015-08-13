@@ -2,6 +2,7 @@
 
 IMPROVEMENTS
 
+* `sys::apt::sources` is now an ensurable resource.
 * `sys::inifile` improvements (GH-6).
 
 ## 0.9.18 (05/08/2015)
