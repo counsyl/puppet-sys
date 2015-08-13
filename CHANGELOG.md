@@ -2,6 +2,7 @@
 
 IMPROVEMENTS
 
+* Enable `source` parameter for all `sys::iptables` protocol classes.
 * `sys::apt::sources` is now an ensurable resource.
 * `sys::inifile` improvements (GH-6).
 

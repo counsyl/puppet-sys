@@ -12,17 +12,21 @@
 # [*udp_port*]
 #  The UDP port for DNS traffic, defaults to 53.
 #
+# [*iniface*]
+#  Interface to apply iptables to, default is undefined.
+#
 # [*priority*]
 #  The priority for the dns firewall rules, defaults to 100.
 #
-# [*iniface*]
-#  Interface to apply iptables to, default is undefined.
+# [*source*]
+#  Source for firewall resources, default is undefined.
 #
 class sys::iptables::dns(
   $tcp_port = '53',
   $udp_port = '53',
-  $priority = '100',
   $iniface  = undef,
+  $priority = '100',
+  $source   = undef,
 ){
   include sys::iptables
 
@@ -31,6 +35,7 @@ class sys::iptables::dns(
     proto   => 'tcp',
     dport   => $tcp_port,
     iniface => $iniface,
+    source  => $source,
   }
 
   firewall { "${priority} allow dns udp":
@@ -38,5 +43,6 @@ class sys::iptables::dns(
     proto   => 'udp',
     dport   => $udp_port,
     iniface => $iniface,
+    source  => $source,
   }
 }

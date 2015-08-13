@@ -14,17 +14,21 @@
 #  The TCP port for HTTPS traffic, defaults to 443.  Set to false to disable
 #  HTTPS traffic entirely.
 #
+# [*iniface*]
+#  Interface for firewall resources, default is undefined.
+#
 # [*priority*]
 #  The priority for the web firewall rules, defaults to 100.
 #
-# [*iniface*]
-#  Interface to apply iptables to, default is undefined.
+# [*source*]
+#  Source for firewall resources, default is undefined.
 #
 class sys::iptables::web(
   $http_port  = '80',
   $https_port = '443',
-  $priority   = '100',
   $iniface    = undef,
+  $priority   = '100',
+  $source     = undef,
 ){
   include sys::iptables
 
@@ -34,6 +38,7 @@ class sys::iptables::web(
       proto   => 'tcp',
       dport   => $http_port,
       iniface => $iniface,
+      source  => $source,
     }
   }
 
@@ -43,6 +48,7 @@ class sys::iptables::web(
       proto   => 'tcp',
       dport   => $https_port,
       iniface => $iniface,
+      source  => $source,
     }
   }
 }

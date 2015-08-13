@@ -9,16 +9,20 @@
 # [*udp_ports*]
 #  The UDP port range for DHCP traffic, defaults to '67-68'.
 #
+# [*iniface*]
+#  Interface for firewall resources, default is undefined.
+#
 # [*priority*]
 #  The priority for the dhcp firewall rules, defaults to 100.
 #
-# [*iniface*]
-#  Interface to apply iptables to, default is undefined.
+# [*source*]
+#  Source for firewall resources, default is undefined.
 #
 class sys::iptables::dhcp(
   $udp_ports = '67-68',
-  $priority  = '100',
   $iniface   = undef,
+  $priority  = '100',
+  $source    = undef,
 ){
   include sys::iptables
 
@@ -27,5 +31,6 @@ class sys::iptables::dhcp(
     proto   => 'udp',
     dport   => $udp_ports,
     iniface => $iniface,
+    source  => $source,
   }
 }

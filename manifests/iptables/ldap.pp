@@ -14,18 +14,21 @@
 #  The TCP port for LDAPS traffic, defaults to 636.  Set to false to disable
 #  LDAPS traffic entirely.
 #
+# [*iniface*]
+#  Interface for firewall resources, default is undefined.
+#
 # [*priority*]
 #  The priority for the ldap firewall rules, defaults to 100.
 #
-# [*iniface*]
-#  Interface to apply iptables to, default is undefined.
+# [*source*]
+#  Source for firewall resources, default is undefined.
 #
 class sys::iptables::ldap(
   $port     = '389',
   $ssl_port = '636',
+  $iniface  = undef,
   $priority = '100',
   $source   = undef,
-  $iniface  = undef,
 ){
   include sys::iptables
 
@@ -35,6 +38,7 @@ class sys::iptables::ldap(
       proto   => 'tcp',
       dport   => $port,
       iniface => $iniface,
+      source  => $source,
     }
   }
 
@@ -44,6 +48,7 @@ class sys::iptables::ldap(
       proto   => 'tcp',
       dport   => $ssl_port,
       iniface => $iniface,
+      source  => $source,
     }
   }
 }
