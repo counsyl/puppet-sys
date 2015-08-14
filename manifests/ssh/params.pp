@@ -49,20 +49,30 @@ class sys::ssh::params {
     }
     debian: {
       if $::operatingsystem == 'Ubuntu' {
-        $lsb_compare = '12'
+        $ecdsa_compare = '12'
+        $ed25519_compare = '14'
       } else {
-        $lsb_compare = '7'
+        $ecdsa_compare = '7'
+        $ed25519_compare = '7'
       }
 
       # Facter 2.2+ changed lsbmajdistrelease fact, e.g., now returns
       # '12.04' instead of '12' on Ubuntu precise.
       $lsb_major_release = regsubst($::lsbmajdistrelease, '^(\d+).*', '\1')
-      if versioncmp($lsb_major_release, $lsb_compare) >= 0 {
+
+      # ECDSA supported in Ubuntu 12.04 / Debian 7 and up.
+      if versioncmp($lsb_major_release, $ecdsa_compare) >= 0 {
         $ecdsa = true
       } else {
         $ecdsa = false
       }
-      $ed25519 = false
+
+      # Ed25519 supported in Ubuntu 14.04 / Debian 7 and up.
+      if versioncmp($lsb_major_release, $ed25519_compare) >= 0 {
+        $ed25519 = true
+      } else {
+        $ed25519 = false
+      }
 
       $client = 'openssh-client'
       $server = 'openssh-server'

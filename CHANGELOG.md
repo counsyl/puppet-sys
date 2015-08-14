@@ -6,6 +6,10 @@ IMPROVEMENTS
 * `sys::apt::sources` is now an ensurable resource.
 * `sys::inifile` improvements (GH-6).
 
+BUG FIXES
+
+* Ed22519 host keys are actually supported on Ubuntu 14 / Debian 7 on up.
+
 ## 0.9.18 (05/08/2015)
 
 FEATURES:
