@@ -21,16 +21,19 @@ class sys::git::params {
       $package  = 'git-core'
     }
     windows: {
-      $version = '1.9.2-preview20140411'
-      $basename = "Git-${version}.exe"
+      $version = '2.5.0'
+      $release_tag = "v${version}.windows.1"
+      $base_url = "https://github.com/git-for-windows/git/releases/download/${release_tag}/"
+
+      if $::architecture == 'x64' {
+        $basename = "Git-${version}-64-bit.exe"
+      } else {
+        $basename = "Git-${version}-32-bit.exe"
+      }
+
       $package = "Git version ${version}"
       $install_options = ['/VERYSILENT']
-      $base_url = "https://github.com/msysgit/msysgit/releases/download/Git-${version}/"
-      if $::architecture == 'x64' {
-        $win_path = 'C:\Program Files (x86)\Git\cmd'
-      } else {
-        $win_path = 'C:\Program Files\Git\cmd'
-      }
+      $win_path = 'C:\Program Files\Git\cmd'
     }
     default: {
       fail("Do not know how to install git on ${::osfamily}.\n")
