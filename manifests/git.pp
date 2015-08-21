@@ -65,6 +65,14 @@ class sys::git (
         directory => $win_path,
         require   => Package[$package],
       }
+
+      if $::architecture == 'x64' {
+        # Git now has native 64-bit support, remove 32-path.
+        windows::path { 'git-path-legacy':
+          ensure    => absent,
+          directory => 'C:\Program Files (x86)\Git\cmd',
+        }
+      }
     }
   } else {
     $git_source = $source
