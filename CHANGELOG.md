@@ -1,8 +1,12 @@
 ## 0.9.19 (unreleased)
 
+FEATURES
+
+* Add SSH host and key exchange algorithm parameters (GH-8).
+
 IMPROVEMENTS
 
-* Add SSH host and key exchange algorithm parameters with validation (GH-8).
+* Validate SSH parameters (GH-8).
 * Upgrade to Git 2.5.0 on windows platforms (GH-7).
 * Enable `source` parameter for all `sys::iptables` protocol classes.
 * `sys::apt::sources` is now an ensurable resource.
