@@ -20,7 +20,7 @@ class sys::ssh::service(
     exec { 'openbsd-restart-sshd':
       command     => '/etc/rc.d/sshd restart',
       refreshonly => true,
-      subscribe   => File[$sshd_config],
+      subscribe   => File[$sys::ssh::params::sshd_config],
     }
   }
 }

@@ -8,14 +8,14 @@ class sys::ssh::known_hosts inherits sys::ssh::params {
 
   # Have to ensure /etc/ssh exists as it doesn't exist on all
   # platforms (like OS X).
-  file { $etc_ssh:
+  file { $sys::ssh::params::etc_ssh:
     ensure => directory,
     owner  => 'root',
     group  => $sys::root_group,
     mode   => '0644',
   }
 
-  file { $known_hosts:
+  file { $sys::ssh::params::known_hosts:
     ensure => file,
     owner  => 'root',
     group  => $sys::root_group,

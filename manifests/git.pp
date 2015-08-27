@@ -42,13 +42,13 @@ class sys::git (
     if $source {
       $source_uri = $source
     } else {
-      $source_uri = "${base_url}${basename}"
+      $source_uri = "${base_url}${sys::git::params::basename}"
     }
 
     # If a non-UNC URL is used, download the Git setup with sys::fetch.
     if $source_uri !~ /^[\\]+/ {
       include windows
-      $git_source = "${windows::installers}\\${basename}"
+      $git_source = "${windows::installers}\\${sys::git::params::basename}"
 
       sys::fetch { 'download-git':
         destination => $git_source,
