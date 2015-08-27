@@ -3,14 +3,14 @@ class sys::solaris::files {
   # files necessary for a functioning solaris host.
   file { '/etc/auto_home':
     ensure => file,
-    mode   => 0644,
+    mode   => '0644',
     owner  => 'root',
     group  => 'bin',
   }
 
   file { '/etc/inet/hosts':
     ensure  => file,
-    mode    => 0644,
+    mode    => '0644',
     owner   => 'root',
     group   => 'sys',
     content => template('sys/solaris/hosts.erb'),
