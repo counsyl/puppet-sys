@@ -3,6 +3,7 @@
 # This class installs and configures SSH.
 #
 # == Parameters
+#
 # [*port*]
 #  The port that the SSH daemon will listen on, defaults to 22.
 #  May be specified multiple times as an array.
@@ -15,6 +16,9 @@
 #  Array that specifies what environment variables sent by the client
 #  will be copied into the client session's environment (on non-Solaris
 #  systems).  Defaults to `[ 'LANG', 'LC_*' ]`.
+#
+# [*agent_forwarding*]
+#  Whether or not to allow agent forwarding, defaults to false.
 #
 # [*authorized_keys_command*]
 #  Specifies a program to be used to look up the user's public keys;
@@ -60,6 +64,13 @@
 # [*empty_passwords*]
 #  Whether or not to allow empty passwords, defaults to false.
 #
+# [*host_key_algorithms*]
+#  Specifies the host key algorithms that the server offers, defaults to [].
+#
+# [*kex_algorithms*]
+#  Specifies the available KEX (Key Exchange) algorithms, must be
+#  given as an array, defaults to [].
+#
 # [*login_grace_time*]
 #  Time (in seconds) that the SSH daemon will disconnect if the
 #  user has not successfully logged in.  Defaults to 120.
@@ -103,9 +114,6 @@
 # [*syslog_facility*]
 #  The syslog facility for the SSH daemon, defaults to 'AUTH'.
 #
-# [*agent_forwarding*]
-#  Whether or not to allow agent forwarding, defaults to false.
-#
 # [*tcp_forwarding*]
 #  Allows TCP forwarding by the SSH daemon, defaults to false.
 #
@@ -129,6 +137,7 @@ class sys::ssh(
   $port                         = 22,
   $listen_address               = undef,
   $acceptenv                    = [ 'LANG', 'LC_*' ],
+  $agent_forwarding             = false,
   $allowusers                   = false,
   $allowgroups                  = false,
   $authorized_keys_command      = false,
@@ -140,6 +149,8 @@ class sys::ssh(
   $challenge_response           = false,
   $ciphers                      = [],
   $empty_passwords              = false,
+  $host_key_algorithms          = [],
+  $kex_algorithms               = [],
   $login_grace_time             = 120,
   $log_level                    = 'INFO',
   $macs                         = [],
@@ -152,13 +163,24 @@ class sys::ssh(
   $sftp                         = true,
   $strict_modes                 = true,
   $syslog_facility              = 'AUTH',
-  $agent_forwarding             = false,
   $tcp_forwarding               = false,
   $tcp_keepalive                = true,
   $trusted_user_ca_keys         = false,
   $use_dns                      = true,
   $x11_forwarding               = false,
 ){
+  validate_array(
+    $acceptenv, $ciphers, $host_key_algorithms,
+    $kex_algorithms, $macs
+  )
+  validate_bool(
+    $agent_forwarding, $challenge_response, $empty_passwords, $password_auth,
+    $privilege_separation, $pubkey_auth, $root_login, $rsa_auth, $sftp,
+    $strict_modes, $tcp_forwarding, $tcp_keepalive, $use_dns, $x11_forwarding
+  )
+  validate_integer($port)
+  validate_integer($login_grace_time)
+
   anchor { 'sys::ssh::start': }  ->
   class { 'sys::ssh::install': } ->
   class { 'sys::ssh::config': }  ->
