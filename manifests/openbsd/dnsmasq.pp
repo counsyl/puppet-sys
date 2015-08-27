@@ -50,7 +50,7 @@ class sys::openbsd::dnsmasq(
   $config             = '/etc/dnsmasq.conf',
   $cache_size         = '750',
   $default_lease      = '24h',
-  $domain             = "${::domain}",
+  $domain             = $::domain,
   $expand_hosts       = true,
   $etc_hosts          = '/etc/hosts',
   $except_interfaces  = [],
