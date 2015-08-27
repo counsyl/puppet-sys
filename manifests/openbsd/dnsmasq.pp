@@ -93,8 +93,8 @@ class sys::openbsd::dnsmasq(
 
   if $service {
     service { $service:
-      enable    => $service_enable,
       ensure    => $service_ensure,
+      enable    => $service_enable,
       subscribe => File[$config, $etc_hosts],
       require   => Package[$package],
     }
