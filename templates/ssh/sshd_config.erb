@@ -38,6 +38,9 @@ Protocol <%= scope['sys::ssh::protocol'] %>
 <% if scope['sys::ssh::ciphers'].count > 0 -%>
 Ciphers <%= option_str(scope['sys::ssh::ciphers'], ',') %>
 <% end -%>
+<% if scope['sys::ssh::kex_algorithms'].count > 0 -%>
+KexAlgorithms <%= option_str(scope['sys::ssh::kex_algorithms'], ',') %>
+<% end -%>
 <% if scope['sys::ssh::macs'].count > 0 -%>
 MACs <%= option_str(scope['sys::ssh::macs'], ',') %>
 <% end -%>
@@ -50,6 +53,9 @@ HostKey /etc/ssh/ssh_host_ecdsa_key
 <% end -%>
 <% if @ed25519 -%>
 HostKey /etc/ssh/ssh_host_ed25519_key
+<% end -%>
+<% if scope['sys::ssh::host_key_algorithms'].count > 0 -%>
+HostKeyAlgorithms <%= option_str(scope['sys::ssh::host_key_algorithms'], ',') %>
 <% end -%>
 <% if scope['sys::ssh::host_certificate'] -%>
 HostCertificate <%= scope['sys::ssh::host_certificate'] %>
