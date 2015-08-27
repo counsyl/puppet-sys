@@ -169,6 +169,18 @@ class sys::ssh(
   $use_dns                      = true,
   $x11_forwarding               = false,
 ){
+  validate_array(
+    $acceptenv, $ciphers, $host_key_algorithms,
+    $kex_algorithms, $macs
+  )
+  validate_bool(
+    $agent_forwarding, $challenge_response, $empty_passwords, $password_auth,
+    $privilege_separation, $pubkey_auth, $root_login, $rsa_auth, $sftp,
+    $strict_modes, $tcp_forwarding, $tcp_keepalive, $use_dns, $x11_forwarding
+  )
+  validate_integer($port)
+  validate_integer($login_grace_time)
+
   anchor { 'sys::ssh::start': }  ->
   class { 'sys::ssh::install': } ->
   class { 'sys::ssh::config': }  ->
