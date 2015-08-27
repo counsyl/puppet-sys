@@ -11,23 +11,23 @@ define sys::solaris::publisher(
     'present': {
       # Constructing options for the `pkg set-publisher` command.
       if $preferred {
-        $preferred_opt = " -P "
+        $preferred_opt = ' -P '
       } else {
-        $preferred_opt = ""
+        $preferred_opt = ''
       }
 
       if $origin {
-        $origin_opt = " -O "
+        $origin_opt = ' -O '
       } else {
-        $origin_opt = ""
+        $origin_opt = ''
       }
 
       if $nonsticky {
-        $sticky_opt = "--non-sticky "
+        $sticky_opt = '--non-sticky '
       } elsif $sticky {
-        $sticky_opt = "--sticky "
+        $sticky_opt = '--sticky '
       } else {
-        $sticky_opt = ""
+        $sticky_opt = ''
       }
 
       $pkg_opts = "${sticky_opt}${preferred_opt}${origin_opt}${uri}"

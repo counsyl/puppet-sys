@@ -5,7 +5,7 @@ define sys::solaris::sharectl(
   $value,
 ){
   exec { "sharectl-${name}":
-    path    => [ "/usr/sbin", "/bin"],
+    path    => [ '/usr/sbin', '/bin'],
     command => "sharectl set -p ${name}=${value} ${protocol}",
     unless  => "sharectl get -p ${name} ${protocol} | grep '^${name}=${value}$'",
   }
