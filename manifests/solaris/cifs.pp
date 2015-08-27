@@ -11,7 +11,7 @@ class sys::solaris::cifs {
   }
 
   service { 'network/smb/client':
-    ensure => running,
+    ensure  => running,
     require => Package['service/file-system/smb'],
   }
 
