@@ -19,41 +19,50 @@ class sys::apt::mirror(
 ){
   include sys::apt::update
   $repositories = [
-    {'uri'          => "${uri}",
-     'distribution' => $::lsbdistcodename,
-     'components'   => ['main', 'restricted'],
+    {
+      'uri'          => "${uri}",
+      'distribution' => $::lsbdistcodename,
+      'components'   => ['main', 'restricted'],
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-updates",
-     'components'   => ['main', 'restricted'],
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-updates",
+      'components'   => ['main', 'restricted'],
     },
-    {'uri'          => "${uri}",
-     'distribution' => $::lsbdistcodename,
-     'components'   => 'universe',
+    {
+      'uri'          => "${uri}",
+      'distribution' => $::lsbdistcodename,
+      'components'   => 'universe',
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-updates",
-     'components'   => 'universe',
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-updates",
+      'components'   => 'universe',
     },
-    {'uri'          => "${uri}",
-     'distribution' => $::lsbdistcodename,
-     'components'   => 'multiverse',
+    {
+      'uri'          => "${uri}",
+      'distribution' => $::lsbdistcodename,
+      'components'   => 'multiverse',
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-updates",
-     'components'   => 'multiverse',
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-updates",
+      'components'   => 'multiverse',
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-security",
-     'components'   => ['main', 'restricted'],
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-security",
+      'components'   => ['main', 'restricted'],
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-security",
-     'components'   => 'universe',
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-security",
+      'components'   => 'universe',
     },
-    {'uri'          => "${uri}",
-     'distribution' => "${::lsbdistcodename}-security",
-     'components'   => 'multiverse',
+    {
+      'uri'          => "${uri}",
+      'distribution' => "${::lsbdistcodename}-security",
+      'components'   => 'multiverse',
     },
   ]
 
