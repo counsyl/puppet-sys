@@ -30,7 +30,7 @@ define sys::apt::key(
   # Command for listing keys -- we use `adv` instead of `list` so that
   # we can pass `--with-colon` option to GPG and get the long version
   # of the public keys.
-  $key_list = "apt-key adv --with-colon --batch --list-keys"
+  $key_list = 'apt-key adv --with-colon --batch --list-keys'
   $key_exists = "${key_list} | grep '^pub:-:[0-9]\\+:[0-9]\\+:${key}'"
 
   # Setting up depending on the ensure value.
@@ -55,7 +55,7 @@ define sys::apt::key(
   # Determine how the key was passed in with regular expressions.
   if $key =~ /^puppet:\/\/\/.+\.gpg$/ {
     include sys::apt
-    $basename = inline_template("<%= File.basename(@key) %>")
+    $basename = inline_template('<%= File.basename(@key) %>')
     $apt_key = "${sys::apt::trusted_d}/${basename}"
     file { $apt_key:
       ensure => $file_ensure,

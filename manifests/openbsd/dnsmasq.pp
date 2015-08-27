@@ -50,7 +50,7 @@ class sys::openbsd::dnsmasq(
   $config             = '/etc/dnsmasq.conf',
   $cache_size         = '750',
   $default_lease      = '24h',
-  $domain             = "${::domain}",
+  $domain             = $::domain,
   $expand_hosts       = true,
   $etc_hosts          = '/etc/hosts',
   $except_interfaces  = [],
@@ -93,8 +93,8 @@ class sys::openbsd::dnsmasq(
 
   if $service {
     service { $service:
-      enable    => $service_enable,
       ensure    => $service_ensure,
+      enable    => $service_enable,
       subscribe => File[$config, $etc_hosts],
       require   => Package[$package],
     }

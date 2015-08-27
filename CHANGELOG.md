@@ -6,6 +6,7 @@ FEATURES
 
 IMPROVEMENTS
 
+* Fix various linting issues in manifests (GH-9).
 * Validate SSH parameters (GH-8).
 * Upgrade to Git 2.5.0 on windows platforms (GH-7).
 * Enable `source` parameter for all `sys::iptables` protocol classes.
