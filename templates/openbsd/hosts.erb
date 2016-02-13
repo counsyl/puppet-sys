@@ -20,7 +20,13 @@
      ip_hash = {}
      network['hosts'].each do |hostname, info|
        if info.key?('ip')
-         ip_hash[IPAddr.new(info['ip'])] = hostname
+         if info['ip'].is_a?(Array)
+           info['ip'].each do |ip|
+             ip_hash[IPAddr.new(ip)] = hostname
+           end
+         else
+           ip_hash[IPAddr.new(info['ip'])] = hostname
+         end
        end
      end
 
