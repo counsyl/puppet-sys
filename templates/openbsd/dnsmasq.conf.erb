@@ -34,6 +34,11 @@ no-resolv
 <% @forwarders.each do | forwarder | -%>
 server=<%= forwarder %>
 <% end -%>
+<%   network['hosts'].keys.sort.each do |hostname| -%>
+<%     if network['hosts'][hostname].key?('cname') -%>
+cname=<%= hostname %>,<%= network['hosts'][hostname]['cname'] %>
+<%     else -%>
+<%   end -%>
 
 # DHCP Settings
 <% if @authoritative -%>
@@ -42,10 +47,10 @@ dhcp-authoritative
 <% @networks.keys.sort.each do | network_key | -%>
 <%   network = @networks[network_key] -%>
 <%   network['ranges'].each do | dhcp_range | -%>
-dhcp-range=<%= dhcp_range.join(',') %>,<% if network.has_key?('lease') %><%= network['lease'] %><% else %><%= @default_lease %><% end %>
+dhcp-range=<%= dhcp_range.join(',') %>,<% if network.key?('lease') %><%= network['lease'] %><% else %><%= @default_lease %><% end %>
 <%   end -%>
 <%   network['hosts'].keys.sort.each do |hostname| -%>
-<%     if network['hosts'][hostname].has_key?('mac') -%>
+<%     if network['hosts'][hostname].key?('mac') -%>
 dhcp-host=<%= network['hosts'][hostname]['mac'] %>,<%= hostname %>,infinite
 <%     else -%>
 dhcp-host=<%= hostname %>
