@@ -34,11 +34,13 @@ no-resolv
 <% @forwarders.each do | forwarder | -%>
 server=<%= forwarder %>
 <% end -%>
-<%   network['hosts'].keys.sort.each do |hostname| -%>
-<%     if network['hosts'][hostname].key?('cname') -%>
+<% @networks.keys.sort.each do | network_key |
+     network['hosts'].keys.sort.each do |hostname|
+       if network['hosts'][hostname].key?('cname') -%>
 cname=<%= hostname %>,<%= network['hosts'][hostname]['cname'] %>
-<%     end -%>
-<%   end -%>
+<%     end
+     end
+   end -%>
 
 # DHCP Settings
 <% if @authoritative -%>
