@@ -7,7 +7,11 @@ class sys::screen::params {
     openbsd: {
       include sys::openbsd::pkg
       $package = 'screen'
-      if versioncmp($::kernelmajversion, '5.5') >= 0 {
+      if versioncmp($::kernelmajversion, '5.9') >= 0 {
+        $ensure = '4.0.3p6'
+      } elsif versioncmp($::kernelmajversion, '5.8') == 0 {
+        $ensure = '4.0.3p5'
+      } elsif versioncmp($::kernelmajversion, '5.5') >= 0 {
         $ensure = '4.0.3p4'
       } elsif versioncmp($::kernelmajversion, '5.3') >= 0 {
         $ensure = '4.0.3p3'
