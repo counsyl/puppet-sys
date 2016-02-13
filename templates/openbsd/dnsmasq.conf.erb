@@ -35,6 +35,7 @@ no-resolv
 server=<%= forwarder %>
 <% end -%>
 <% @networks.keys.sort.each do | network_key |
+     network = @networks[network_key]
      network['hosts'].keys.sort.each do |hostname|
        if network['hosts'][hostname].key?('cname') -%>
 cname=<%= hostname %>,<%= network['hosts'][hostname]['cname'] %>
