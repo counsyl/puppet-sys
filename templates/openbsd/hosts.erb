@@ -1,4 +1,4 @@
-# 	$OpenBSD: hosts,v 1.12 2009/03/10 00:42:13 deraadt Exp $
+#       $OpenBSD: hosts,v 1.12 2009/03/10 00:42:13 deraadt Exp $
 #
 # Host Database
 #
@@ -9,27 +9,29 @@
 #
 127.0.0.1       localhost
 ::1             localhost
-<% @networks.keys.sort.each do |name| -%>
-<%   network = @networks[name] -%>
-<%   # Place comment for the network in the hosts file -%>
-<%   if network.fetch('comment', '') != '' -%>
+<% @networks.keys.sort.each do |name|
+     network = @networks[name]
+     # Place comment for the network in the hosts file
+     if network.fetch('comment', '') != '' -%>
 # <%= network['comment'] %>
-<%   end -%>
-<%   # Creating hash mapping from IP to hostname on this network. -%>
-<%   ip_hash = {} -%>
-<%   network['hosts'].each do |hostname, info| -%>
-<%     ip_hash[IPAddr.new(info['ip'])] = hostname -%>
-<%   end -%>
-<%   # Print out hosts, ordered by IP Address. -%>
-<%   ip_hash.keys.sort.each do |ip| -%>
-<%     hostname = ip_hash[ip] -%>
-<%     aliases = network['hosts'][hostname].fetch('aliases', false) -%>
-<%     if aliases.is_a?(Array) -%>
+<%   end
+
+     # Creating hash mapping from IP to hostname on this network.
+     ip_hash = {}
+     network['hosts'].each do |hostname, info|
+       ip_hash[IPAddr.new(info['ip'])] = hostname
+     end
+
+     # Print out hosts, ordered by IP Address.
+     ip_hash.keys.sort.each do |ip|
+       hostname = ip_hash[ip]
+       aliases = network['hosts'][hostname].fetch('aliases', false)
+       if aliases.is_a?(Array) -%>
 <%=      sprintf("%-15s %s %s", ip, hostname, aliases.join(' ')) %>
 <%     elsif aliases -%>
 <%=      sprintf("%-15s %s %s", ip, hostname, aliases) %>
 <%     else -%>
 <%=      sprintf("%-15s %s", ip, hostname) %>
-<%     end -%>
-<%   end -%>
-<% end -%>
+<%     end
+     end
+   end -%>
