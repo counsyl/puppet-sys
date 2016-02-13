@@ -37,7 +37,7 @@ server=<%= forwarder %>
 <%   network['hosts'].keys.sort.each do |hostname| -%>
 <%     if network['hosts'][hostname].key?('cname') -%>
 cname=<%= hostname %>,<%= network['hosts'][hostname]['cname'] %>
-<%     else -%>
+<%     end -%>
 <%   end -%>
 
 # DHCP Settings
