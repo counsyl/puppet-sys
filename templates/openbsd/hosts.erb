@@ -19,7 +19,9 @@
      # Creating hash mapping from IP to hostname on this network.
      ip_hash = {}
      network['hosts'].each do |hostname, info|
-       ip_hash[IPAddr.new(info['ip'])] = hostname
+       if info.key?('ip')
+         ip_hash[IPAddr.new(info['ip'])] = hostname
+       end
      end
 
      # Print out hosts, ordered by IP Address.
