@@ -8,10 +8,12 @@ class sys::wget (
   $provider = $sys::wget::params::provider,
   $source   = $sys::wget::params::source,
 ) inherits sys::wget::params {
-  package { $package:
-    ensure   => $ensure,
-    alias    => 'wget',
-    provider => $provider,
-    source   => $source,
+  if !defined(Package[$package]) {
+    package { $package:
+      ensure   => $ensure,
+      alias    => 'wget',
+      provider => $provider,
+      source   => $source,
+    }
   }
 }

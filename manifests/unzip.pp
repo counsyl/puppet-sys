@@ -9,11 +9,13 @@ class sys::unzip(
   $provider = $sys::unzip::params::provider,
 ) inherits sys::unzip::params {
   if $package {
-    package { $package:
-      ensure   => $ensure,
-      alias    => 'unzip',
-      provider => $provider,
-      source   => $source,
+    if !defined(Package[$package]) {
+      package { $package:
+        ensure   => $ensure,
+        alias    => 'unzip',
+        provider => $provider,
+        source   => $source,
+      }
     }
   }
 }
