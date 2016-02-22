@@ -62,6 +62,7 @@ define sys::fetch(
       }
       $output_opt = "--output '${destination}'"
       $dl_cmd = '/usr/bin/curl --silent --location'
+      $provider = undef
     }
     windows: {
       # Use PowerShell provider (via joshcooper's powershell module).
@@ -78,6 +79,7 @@ define sys::fetch(
       $output_opt = "--output-document='${destination}'"
       $dl_cmd = "${sys::wget::path} --quiet"
       $fetch_require = Class['sys::wget']
+      $provider = undef
     }
   }
 
