@@ -1,3 +1,10 @@
+## 0.9.20 (06/19/2016)
+
+IMPROVEMENTS
+
+* Add support for RHEL7 (GH-11).
+* Update name of cryptsetup package for RHEL7 (GH-16)
+
 ## 0.9.19 (08/27/2015)
 
 FEATURES
