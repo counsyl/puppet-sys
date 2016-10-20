@@ -1,3 +1,9 @@
+## 0.9.21 (10/19/2016)
+
+IMPROVEMENTS
+
+* Use ensure_packages to install wget.
+
 ## 0.9.20 (06/19/2016)
 
 IMPROVEMENTS
