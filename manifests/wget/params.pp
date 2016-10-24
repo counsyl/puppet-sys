@@ -8,6 +8,7 @@ class sys::wget::params {
       include sys::openbsd::pkg
       $package = 'wget'
       $path = '/usr/local/bin/wget'
+      $provider = undef
       $source = $openbsd::pkg::source
     }
     solaris: {
@@ -15,10 +16,13 @@ class sys::wget::params {
       $package = 'web/wget'
       $path = '/usr/bin/wget'
       $provider = 'pkg'
+      $source = undef
     }
     default: {
       $package = 'wget'
       $path = '/usr/bin/wget'
+      $provider = undef
+      $source = undef
     }
   }
 }
