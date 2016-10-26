@@ -1,3 +1,9 @@
+## 0.9.22 (10/26/2016)
+
+BUG FIXES
+
+* Fix undefined variables (Joshua Spence <josh@freelancer.com>).
+
 ## 0.9.21 (10/19/2016)
 
 IMPROVEMENTS
