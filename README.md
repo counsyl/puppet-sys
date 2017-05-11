@@ -6,6 +6,7 @@ This module contains classes, defined types, and parameters to assist system adm
 * Installing common system utilities, shells, and terminal managers:
  * `sys::bash`
  * `sys::curl`
+ * `sys::expect`
  * `sys::gcc`
  * `sys::git`
  * `sys::htop`
