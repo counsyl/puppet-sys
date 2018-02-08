@@ -12,7 +12,6 @@ class sys::unzip(
     ensure_packages([$package],
       {
         'ensure'   => 'present',
-        'alias'    => 'unzip',
         'provider' => $provider,
         'source'   => $source,
       }
