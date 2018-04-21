@@ -17,6 +17,9 @@ class sys::luks::params {
         }
       }
     }
+    'Suse': {
+      $package = 'cryptsetup'
+    }
     default: {
       fail("Do not know how to install LUKS on ${::osfamily}.\n")
     }
