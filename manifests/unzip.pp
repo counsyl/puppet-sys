@@ -11,7 +11,7 @@ class sys::unzip(
   if $package {
     ensure_packages([$package],
       {
-        'ensure'   => 'present',
+        'ensure'   => $ensure,
         'provider' => $provider,
         'source'   => $source,
       }
