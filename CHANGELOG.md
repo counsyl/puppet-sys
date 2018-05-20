@@ -1,3 +1,10 @@
+## 0.9.23 (05/19/2018)
+
+IMPROVEMENTS
+
+* Use ensure_packages to install unzip (Kyle Williams <kyle.williams@netapp.com>).
+* Support Suse in sys::luks (Sven Büsing <github@svenbuesing.de>).
+
 ## 0.9.22 (10/26/2016)
 
 BUG FIXES
