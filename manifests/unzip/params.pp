@@ -15,7 +15,7 @@ class sys::unzip::params {
       $package = 'unzip'
       $path = '/usr/local/bin/unzip'
       $provider = undef
-      $source = $openbsd::pkg::source
+      $source = $sys::openbsd::pkg::source
     }
     solaris: {
       include sys::solaris
