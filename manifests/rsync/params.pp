@@ -10,11 +10,17 @@ class sys::rsync::params inherits sys {
   case $::osfamily {
     openbsd: {
       include sys::openbsd::pkg
+      $provider = undef
       $source = $sys::openbsd::pkg::source
     }
     solaris: {
       include sys::solaris
       $provider = 'pkg'
+      $source = undef
+    }
+    default: {
+      $provider = undef
+      $source = undef
     }
   }
 }
