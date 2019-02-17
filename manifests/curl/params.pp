@@ -13,7 +13,7 @@ class sys::curl::params {
       include sys::openbsd::pkg
       $package = 'curl'
       $path = '/usr/local/bin/curl'
-      $source = $openbsd::pkg::source
+      $source = $sys::openbsd::pkg::source
     }
     solaris: {
       include sys::solaris

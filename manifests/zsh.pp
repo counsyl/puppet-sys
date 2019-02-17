@@ -4,9 +4,9 @@
 #
 class sys::zsh (
   $ensure   = 'installed',
-  $package  = $zsh::params::package,
-  $source   = $zsh::params::source,
-  $provider = $zsh::params::provider,
+  $package  = $sys::zsh::params::package,
+  $source   = $sys::zsh::params::source,
+  $provider = $sys::zsh::params::provider,
 ) inherits sys::zsh::params {
   if $package {
     package { $package:

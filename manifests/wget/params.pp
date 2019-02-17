@@ -9,7 +9,7 @@ class sys::wget::params {
       $package = 'wget'
       $path = '/usr/local/bin/wget'
       $provider = undef
-      $source = $openbsd::pkg::source
+      $source = $sys::openbsd::pkg::source
     }
     solaris: {
       include sys::solaris
