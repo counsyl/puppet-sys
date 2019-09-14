@@ -1,3 +1,9 @@
+## 0.9.24 (02/17/2019)
+
+IMPROVEMENTS
+
+* Fix rsync on Linux (Matt Dainty <matt@bodgit-n-scarper.com>).
+
 ## 0.9.23 (05/19/2018)
 
 IMPROVEMENTS
