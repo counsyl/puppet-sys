@@ -4,25 +4,16 @@
 #
 class sys::redhat::epel {
   # Getting the right RPM depending on this RedHat release.
-  case $::operatingsystemrelease {
-    /^5\.\d+$/: {
-      $epel_name = 'epel-release-5-4'
-      $epel_rpm  = "http://download.fedoraproject.org/pub/epel/5/i386/${epel_name}.noarch.rpm"
-    }
-    /^6\.\d+$/: {
-      $epel_name = 'epel-release-6-8'
-      $epel_rpm  = "http://download.fedoraproject.org/pub/epel/6/i386/${epel_name}.noarch.rpm"
-    }
-    /^7\.[\d.]+$/: {
-      $epel_name = 'epel-release-7-6'
-      $epel_rpm  = "http://download.fedoraproject.org/pub/epel/7/x86_64/e/${epel_name}.noarch.rpm"
+  case $::operatingsystemmajrelease {
+    /^[5-7]$/: {
+      $epel_rpm  = "http://dl.fedoraproject.org/pub/epel/epel-release-latest-${operatingsystemmajrelease}.noarch.rpm"
     }
     default: {
-      fail("Do not know how to install EPEL on RedHat release: ${::operatingsystemrelease}.\n")
+      fail("Do not know how to install EPEL on RedHat release: ${::operatingsystemmajrelease}.\n")
     }
   }
 
-  package { $epel_name:
+  package { 'epel-release':
     ensure   => installed,
     alias    => 'epel',
     source   => $epel_rpm,
