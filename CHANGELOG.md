@@ -1,3 +1,9 @@
+## 0.9.25 (06/10/2023)
+
+BUG FIXES
+
+* Fix incorrect module paths in sys::bash (Andrew Forgue https://github.com/ajf)
+
 ## 0.9.24 (02/17/2019)
 
 IMPROVEMENTS
