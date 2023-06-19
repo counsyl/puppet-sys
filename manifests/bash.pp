@@ -21,10 +21,10 @@
 #
 class sys::bash (
   $ensure   = 'installed',
-  $package  = $bash::params::package,
-  $source   = $bash::params::source,
-  $provider = $bash::params::provider,
-  $extras   = $bash::params::extras,
+  $package  = $sys::bash::params::package,
+  $source   = $sys::bash::params::source,
+  $provider = $sys::bash::params::provider,
+  $extras   = $sys::bash::params::extras,
 ) inherits sys::bash::params {
   if $package {
     package { $package:
